@@ -3,23 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FinFutur — Financial Calculators</title>
+<title>FinFutur — Corporate Financial Consulting</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#07080A;
-    --glass:rgba(255,255,255,0.045);
-    --glass-hi:rgba(255,255,255,0.07);
-    --glass-border:rgba(255,255,255,0.12);
+    --bg:#08090B;
+    --panel:#111317;
+    --panel2:#161920;
     --chrome1:#EEF0F4;
     --chrome2:#9CA3B0;
     --chrome3:#CDD3DE;
-    --violet:#7C6CF0;
-    --violet-soft:rgba(124,108,240,0.18);
-    --mint:#00D9A3;
-    --mint-soft:rgba(0,217,163,0.16);
-    --ink-muted:#8B8F99;
+    --brass:#C9A768;
+    --line:rgba(238,240,244,0.1);
+    --muted:#8B8F99;
     --white:#F4F5F7;
   }
   *{box-sizing:border-box;}
@@ -27,461 +24,450 @@
   body{
     margin:0;
     background:
-      radial-gradient(900px 500px at 90% -8%, rgba(124,108,240,0.16), transparent 60%),
-      radial-gradient(760px 460px at 0% 20%, rgba(0,217,163,0.08), transparent 55%),
+      radial-gradient(1000px 520px at 90% -10%, rgba(201,167,104,0.08), transparent 60%),
+      radial-gradient(800px 460px at 0% 30%, rgba(156,163,176,0.06), transparent 55%),
       var(--bg);
     color:var(--white);
     font-family:'Inter',sans-serif;
     -webkit-font-smoothing:antialiased;
-    min-height:100vh;
   }
-  .num{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;}
-
+  .num{font-family:'JetBrains Mono',monospace;}
   .chrome-text{
-    background:linear-gradient(115deg, var(--chrome2) 0%, var(--chrome1) 20%, var(--chrome3) 42%, var(--chrome1) 58%, var(--chrome2) 80%, var(--chrome1) 100%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
+    background:linear-gradient(115deg, var(--chrome2) 0%, var(--chrome1) 22%, var(--chrome3) 45%, var(--chrome1) 62%, var(--chrome2) 85%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
   }
+  a{color:inherit;}
 
   /* ---------- Header ---------- */
   header{
-    padding:28px 6vw 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    padding:26px 6vw;
+    display:flex;justify-content:space-between;align-items:center;
+    border-bottom:1px solid var(--line);
+    position:sticky;top:0;
+    background:rgba(8,9,11,0.82);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    z-index:10;
   }
-  .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.4rem;letter-spacing:-0.01em;}
-  .wordmark .dot{color:var(--violet);}
-  .tagline{font-size:0.7rem;color:var(--ink-muted);letter-spacing:0.14em;text-transform:uppercase;margin-top:3px;}
+  .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;letter-spacing:-0.01em;}
+  .wordmark span{color:var(--brass);}
+  nav.links{display:flex;gap:22px;font-size:0.84rem;color:var(--muted);}
+  nav.links a{text-decoration:none;transition:color .15s ease;}
+  nav.links a:hover{color:var(--white);}
+  .cta-btn{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;font-size:0.85rem;
+    background:linear-gradient(120deg, var(--chrome1), var(--chrome3), var(--chrome1));
+    color:#0B0C0E;
+    padding:11px 22px;
+    border-radius:999px;
+    text-decoration:none;
+    white-space:nowrap;
+  }
+  @media (max-width:900px){nav.links{display:none;}}
 
   /* ---------- Hero ---------- */
-  .hero{
-    padding:56px 6vw 10px;
-    display:grid;
-    grid-template-columns:1.1fr 0.9fr;
-    gap:40px;
-    align-items:center;
+  .hero{padding:100px 6vw 70px;max-width:900px;}
+  .eyebrow{
+    font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--brass);margin-bottom:20px;font-weight:600;
   }
-  @media (max-width:900px){.hero{grid-template-columns:1fr;}}
   .hero h1{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:clamp(2.1rem,4vw,3.1rem);
-    line-height:1.12;
-    margin:0 0 20px;
-    letter-spacing:-0.02em;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(2.2rem,4.6vw,3.6rem);line-height:1.12;
+    margin:0 0 24px;letter-spacing:-0.02em;
   }
-  .hero p{font-size:1.02rem;line-height:1.7;color:var(--ink-muted);max-width:50ch;margin:0;}
-
-  /* ---------- Metal card visual ---------- */
-  .card-stage{
-    display:flex;
-    justify-content:center;
-    perspective:1200px;
-  }
-  .metal-card{
-    width:340px;
-    height:212px;
-    border-radius:20px;
-    position:relative;
-    transform:rotate3d(1,-1,0.2,14deg);
-    background:
-      linear-gradient(120deg, rgba(255,255,255,0.55) 0%, transparent 8%),
-      repeating-linear-gradient(115deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 4px),
-      linear-gradient(155deg, #E8EAEE 0%, #AEB4C0 22%, #7B8191 40%, #C7CCD6 55%, #91969F 72%, #DEE1E6 100%);
-    box-shadow:
-      0 30px 60px -20px rgba(0,0,0,0.65),
-      inset 0 1px 1px rgba(255,255,255,0.6),
-      inset 0 -20px 40px rgba(0,0,0,0.25);
-    padding:26px 26px;
-    color:#1B1D22;
-    animation:float 6s ease-in-out infinite;
-  }
-  @keyframes float{
-    0%,100%{transform:rotate3d(1,-1,0.2,14deg) translateY(0);}
-    50%{transform:rotate3d(1,-1,0.2,10deg) translateY(-10px);}
-  }
-  .chip{
-    width:38px;height:28px;
-    border-radius:6px;
-    background:linear-gradient(135deg,#D8C48A,#9C7A3C);
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,0.15);
-    margin-bottom:34px;
-  }
-  .card-brand{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:1.1rem;
-    letter-spacing:-0.01em;
-    margin-bottom:6px;
-  }
-  .card-number{
-    font-family:'JetBrains Mono',monospace;
-    font-size:0.92rem;
-    letter-spacing:0.14em;
-    opacity:0.75;
-    margin-bottom:22px;
-  }
-  .card-foot{display:flex;justify-content:space-between;align-items:flex-end;font-size:0.66rem;letter-spacing:0.08em;text-transform:uppercase;opacity:0.65;}
-  .card-foot .amount{font-family:'JetBrains Mono',monospace;font-size:0.95rem;text-transform:none;letter-spacing:0;font-weight:600;opacity:1;}
-
-  /* ---------- Tabs ---------- */
-  .tabs{
-    display:flex;
-    gap:10px;
-    padding:0 6vw;
-    margin-top:60px;
-  }
-  .tab{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:600;
-    font-size:0.82rem;
-    background:var(--glass);
-    border:1px solid var(--glass-border);
-    padding:11px 20px;
-    border-radius:999px;
-    cursor:pointer;
-    color:var(--ink-muted);
-    transition:all .2s ease;
-  }
-  .tab.active{
-    color:#0B0C0E;
+  .hero p{font-size:1.08rem;line-height:1.75;color:var(--muted);max-width:60ch;margin:0 0 34px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn-primary{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.9rem;
     background:linear-gradient(120deg, var(--chrome1), var(--chrome3), var(--chrome1));
-    border-color:transparent;
+    color:#0B0C0E;padding:14px 28px;border-radius:10px;text-decoration:none;
   }
-  .tab:hover:not(.active){color:var(--white);border-color:rgba(255,255,255,0.25);}
-  .tab:focus-visible{outline:2px solid var(--violet);outline-offset:2px;}
+  .btn-secondary{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.9rem;
+    background:transparent;color:var(--white);padding:14px 28px;border-radius:10px;
+    border:1px solid var(--line);text-decoration:none;
+  }
 
-  /* ---------- Calculator layout ---------- */
-  .calc-wrap{padding:36px 6vw 100px;}
-  .panel{display:none;}
-  .panel.active{display:block;animation:fade .4s ease;}
-  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  /* ---------- Section shell ---------- */
+  section.block{padding:70px 6vw;border-top:1px solid var(--line);}
+  .block-head{max-width:640px;margin-bottom:48px;}
+  .block-label{font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--brass);margin-bottom:14px;font-weight:600;}
+  .block-head h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(1.6rem,2.6vw,2.2rem);margin:0 0 14px;letter-spacing:-0.015em;}
+  .block-head p{color:var(--muted);font-size:1rem;line-height:1.7;margin:0;}
 
-  .calc-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:36px;align-items:start;}
-  @media (max-width:860px){.calc-grid{grid-template-columns:1fr;}}
+  /* ---------- Services ---------- */
+  .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+  @media (max-width:760px){.services-grid{grid-template-columns:1fr;}}
+  .service-card{
+    background:linear-gradient(160deg, var(--panel2), var(--panel));
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:32px;
+  }
+  .service-card .idx{font-family:'JetBrains Mono',monospace;color:var(--brass);font-size:0.85rem;margin-bottom:18px;display:block;}
+  .service-card h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.15rem;margin:0 0 12px;}
+  .service-card p{color:var(--muted);font-size:0.94rem;line-height:1.65;margin:0;}
 
+  /* ---------- Projection tool ---------- */
+  .proj-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:36px;align-items:start;}
+  @media (max-width:900px){.proj-grid{grid-template-columns:1fr;}}
   .glass-panel{
-    background:var(--glass);
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-    border:1px solid var(--glass-border);
-    border-radius:20px;
-    padding:34px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:32px;
   }
-  .field{margin-bottom:28px;}
+  .field{margin-bottom:26px;}
   .field:last-child{margin-bottom:0;}
-  .field label{display:flex;justify-content:space-between;align-items:baseline;font-size:0.8rem;color:var(--ink-muted);margin-bottom:12px;font-weight:500;}
-  .field label .val{font-family:'JetBrains Mono',monospace;color:var(--mint);font-size:0.96rem;font-weight:500;}
+  .field label{display:flex;justify-content:space-between;align-items:baseline;font-size:0.8rem;color:var(--muted);margin-bottom:11px;font-weight:500;}
+  .field label .val{font-family:'JetBrains Mono',monospace;color:var(--brass);font-size:0.94rem;font-weight:500;}
   input[type=range]{
-    width:100%;
-    -webkit-appearance:none;
-    height:4px;
-    background:rgba(255,255,255,0.12);
-    border-radius:4px;
-    outline:none;
+    width:100%;-webkit-appearance:none;height:3px;
+    background:rgba(238,240,244,0.14);border-radius:3px;outline:none;
   }
   input[type=range]::-webkit-slider-thumb{
-    -webkit-appearance:none;
-    width:18px;height:18px;
-    border-radius:50%;
-    background:linear-gradient(135deg,var(--violet),#5A4CD1);
-    cursor:pointer;
-    border:2px solid rgba(255,255,255,0.6);
-    box-shadow:0 0 0 5px var(--violet-soft), 0 2px 8px rgba(0,0,0,0.5);
+    -webkit-appearance:none;width:17px;height:17px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff, var(--chrome2) 100%);
+    cursor:pointer;border:none;box-shadow:0 0 0 4px rgba(201,167,104,0.18), 0 2px 6px rgba(0,0,0,0.5);
   }
   input[type=range]::-moz-range-thumb{
-    width:18px;height:18px;
-    border-radius:50%;
-    background:linear-gradient(135deg,var(--violet),#5A4CD1);
-    cursor:pointer;
-    border:2px solid rgba(255,255,255,0.6);
-    box-shadow:0 0 0 5px var(--violet-soft);
+    width:17px;height:17px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff, var(--chrome2) 100%);
+    cursor:pointer;border:none;box-shadow:0 0 0 4px rgba(201,167,104,0.18);
   }
-  input[type=range]:focus-visible{outline:2px solid var(--mint);outline-offset:4px;}
-
-  /* ---------- Result panel ---------- */
-  .result{
-    position:relative;
-    background:linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-    border:1px solid var(--glass-border);
-    border-radius:20px;
-    padding:36px 34px;
-    overflow:hidden;
+  .proj-result{
+    background:linear-gradient(160deg, var(--panel2), var(--panel));
+    border:1px solid var(--line);border-radius:18px;padding:32px;
   }
-  .result::before{
-    content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;
-    background:radial-gradient(circle, var(--violet-soft), transparent 70%);
-    pointer-events:none;
-  }
-  .result-label{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px;}
-  .result-headline{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:2.5rem;margin:0 0 28px;letter-spacing:-0.02em;}
-  .result-row{display:flex;justify-content:space-between;padding:13px 0;border-top:1px solid var(--glass-border);font-size:0.92rem;color:var(--ink-muted);}
-  .result-row:last-of-type{border-bottom:1px solid var(--glass-border);}
-  .result-row .amt{font-size:0.98rem;color:var(--white);font-weight:600;}
-
-  .bar{display:flex;height:7px;border-radius:7px;overflow:hidden;margin:22px 0 12px;background:rgba(255,255,255,0.08);}
-  .bar-a{background:linear-gradient(90deg,#5A4CD1,var(--violet));}
-  .bar-b{background:linear-gradient(90deg,#00A87E,var(--mint));}
-  .bar-legend{display:flex;gap:22px;font-size:0.76rem;color:var(--ink-muted);}
+  .proj-result-label{font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+  .proj-headline{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:2.1rem;margin:0 0 26px;}
+  .proj-chart{display:flex;align-items:flex-end;gap:10px;height:150px;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:0;}
+  .proj-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:2px;}
+  .proj-bar{width:100%;border-radius:3px 3px 0 0;}
+  .proj-bar.rev{background:linear-gradient(180deg, var(--chrome1), var(--chrome2));}
+  .proj-bar.exp{background:linear-gradient(180deg, #8A5C3E, var(--brass));}
+  .proj-labels{display:flex;gap:10px;margin-bottom:22px;}
+  .proj-labels span{flex:1;text-align:center;font-size:0.68rem;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+  .proj-legend{display:flex;gap:22px;font-size:0.76rem;color:var(--muted);margin-bottom:20px;}
   .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;position:relative;top:-1px;}
+  .proj-row{display:flex;justify-content:space-between;padding:11px 0;border-top:1px solid var(--line);font-size:0.9rem;color:var(--muted);}
+  .proj-row:last-of-type{border-bottom:1px solid var(--line);}
+  .proj-row .amt{color:var(--white);font-weight:600;font-size:0.95rem;}
 
-  .panel-intro{max-width:62ch;color:var(--ink-muted);font-size:0.95rem;line-height:1.7;margin:0 0 28px;}
+  /* ---------- Resources ---------- */
+  .resource-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media (max-width:900px){.resource-grid{grid-template-columns:1fr;}}
+  .resource-card{
+    border:1px solid var(--line);border-radius:16px;padding:28px;
+    background:linear-gradient(160deg, var(--panel2), var(--panel));
+  }
+  .resource-card h4{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.02rem;margin:0 0 12px;}
+  .resource-card p{color:var(--muted);font-size:0.9rem;line-height:1.65;margin:0;}
+
+  .disclaimer{
+    font-size:0.82rem;color:var(--muted);line-height:1.7;
+    border-left:2px solid var(--brass);padding-left:16px;margin-top:24px;
+  }
+
+  /* ---------- Approach ---------- */
+  .approach-list{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);}
+  @media (max-width:860px){.approach-list{grid-template-columns:1fr;}}
+  .approach-item{padding:28px 24px 28px 0;border-right:1px solid var(--line);}
+  .approach-list .approach-item:last-child{border-right:none;}
+  @media (max-width:860px){.approach-item{border-right:none;border-bottom:1px solid var(--line);padding:24px 0;}}
+  .approach-item .step-num{font-family:'JetBrains Mono',monospace;color:var(--chrome2);font-size:0.85rem;margin-bottom:14px;}
+  .approach-item h4{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.02rem;margin:0 0 10px;}
+  .approach-item p{color:var(--muted);font-size:0.9rem;line-height:1.6;margin:0;}
+
+  /* ---------- About ---------- */
+  .about-wrap{display:grid;grid-template-columns:0.9fr 1.1fr;gap:50px;align-items:start;}
+  @media (max-width:860px){.about-wrap{grid-template-columns:1fr;}}
+  .about-card{
+    background:linear-gradient(160deg, var(--panel2), var(--panel));
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:34px;
+  }
+  .about-card .tag{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--brass);margin-bottom:16px;font-weight:600;}
+  .about-card p{color:var(--muted);font-size:0.95rem;line-height:1.7;margin:0 0 14px;}
+  .about-card p:last-child{margin-bottom:0;}
+
+  /* ---------- Contact ---------- */
+  .contact-block{
+    background:linear-gradient(160deg, var(--panel2), var(--panel));
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:56px 6vw;
+    margin:0 6vw 90px;
+    text-align:center;
+  }
+  .contact-block h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(1.6rem,3vw,2.3rem);margin:0 0 16px;}
+  .contact-block p{color:var(--muted);font-size:1rem;max-width:52ch;margin:0 auto 30px;line-height:1.7;}
 
   footer{
-    padding:36px 6vw;
-    border-top:1px solid var(--glass-border);
+    padding:32px 6vw;border-top:1px solid var(--line);
     display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
-    font-size:0.78rem;color:var(--ink-muted);
+    font-size:0.78rem;color:var(--muted);
   }
-  footer a{color:var(--mint);text-decoration:none;}
 </style>
 </head>
 <body>
 
 <header>
-  <div>
-    <div class="wordmark">Fin<span class="dot">•</span>Futur</div>
-    <div class="tagline">Money, worked out</div>
-  </div>
+  <div class="wordmark">Fin<span>Futur</span></div>
+  <nav class="links">
+    <a href="#services">Services</a>
+    <a href="#projection">Projection Tool</a>
+    <a href="#resources">Resources</a>
+    <a href="#approach">Approach</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a class="cta-btn" href="#contact">Get in touch</a>
 </header>
 
 <section class="hero">
-  <div>
-    <h1>See where your money is <span class="chrome-text">actually</span> headed.</h1>
-    <p>Three calculators for the decisions that matter most — what a loan really costs you, what steady investing can grow into, and what retirement will take.</p>
+  <div class="eyebrow">Corporate Financial Consulting</div>
+  <h1>Clear financial strategy for businesses that need to <span class="chrome-text">move with confidence.</span></h1>
+  <p>FinFutur works with founders and finance teams on the decisions that shape a company's financial direction — planning, forecasting, capital structure, and cost discipline — with practical, hands-on guidance rather than generic advice.</p>
+  <div class="hero-ctas">
+    <a class="btn-primary" href="#contact">Start a conversation</a>
+    <a class="btn-secondary" href="#services">See what we do</a>
   </div>
-  <div class="card-stage">
-    <div class="metal-card">
-      <div class="chip"></div>
-      <div class="card-brand">FinFutur</div>
-      <div class="card-number">•••• •••• •••• 4471</div>
-      <div class="card-foot">
-        <span>Est. corpus</span>
-        <span class="amount" id="cardAmount">₹0</span>
-      </div>
+</section>
+
+<section class="block" id="services">
+  <div class="block-head">
+    <div class="block-label">Services</div>
+    <h2>Where we help</h2>
+    <p>Focused engagements built around the financial questions that actually slow businesses down.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="idx num">01</span>
+      <h3>Financial Strategy &amp; Planning</h3>
+      <p>Building a clear, workable financial plan tied to your actual business goals — not a generic template.</p>
+    </div>
+    <div class="service-card">
+      <span class="idx num">02</span>
+      <h3>Cash Flow &amp; Forecasting</h3>
+      <p>Getting visibility into where money is going, what's coming, and where the pressure points will show up first.</p>
+    </div>
+    <div class="service-card">
+      <span class="idx num">03</span>
+      <h3>Capital &amp; Fundraising Advisory</h3>
+      <p>Preparing the numbers, narrative, and structure needed to raise capital or negotiate financing with confidence.</p>
+    </div>
+    <div class="service-card">
+      <span class="idx num">04</span>
+      <h3>Cost &amp; Efficiency Review</h3>
+      <p>A practical look at where spend is working for the business and where it quietly isn't.</p>
     </div>
   </div>
 </section>
 
-<nav class="tabs" role="tablist" aria-label="Calculator selection">
-  <button class="tab active" role="tab" aria-selected="true" data-target="loan">Loan EMI</button>
-  <button class="tab" role="tab" aria-selected="false" data-target="sip">SIP Growth</button>
-  <button class="tab" role="tab" aria-selected="false" data-target="retire">Retirement</button>
-</nav>
-
-<div class="calc-wrap">
-
-  <!-- LOAN EMI -->
-  <section class="panel active" id="loan">
-    <p class="panel-intro">Enter your loan amount, interest rate, and tenure in months. See your monthly instalment and how much of the total repayment is interest versus principal.</p>
-    <div class="calc-grid">
-      <div class="glass-panel">
-        <div class="field">
-          <label>Loan amount <span class="val num" id="loanAmtVal">₹25,00,000</span></label>
-          <input type="range" id="loanAmt" min="100000" max="10000000" step="50000" value="2500000">
-        </div>
-        <div class="field">
-          <label>Interest rate (per year) <span class="val num" id="loanRateVal">9.0%</span></label>
-          <input type="range" id="loanRate" min="1" max="30" step="0.1" value="9">
-        </div>
-        <div class="field">
-          <label>Tenure <span class="val num" id="loanTenureVal">240 mo</span></label>
-          <input type="range" id="loanTenure" min="6" max="360" step="1" value="240">
-        </div>
+<section class="block" id="projection">
+  <div class="block-head">
+    <div class="block-label">Free Tool</div>
+    <h2>Project where your business is headed</h2>
+    <p>Set your current monthly revenue and costs, expected growth, and a time horizon — see how the gap between revenue and expenses plays out.</p>
+  </div>
+  <div class="proj-grid">
+    <div class="glass-panel">
+      <div class="field">
+        <label>Current monthly revenue <span class="val num" id="pRevVal">₹5,00,000</span></label>
+        <input type="range" id="pRev" min="50000" max="10000000" step="10000" value="500000">
       </div>
-
-      <div class="result">
-        <div class="result-label">Monthly instalment</div>
-        <div class="result-headline num chrome-text" id="emiOut">₹0</div>
-        <div class="result-row"><span>Principal borrowed</span><span class="amt num" id="loanPrincipalOut">₹0</span></div>
-        <div class="result-row"><span>Total interest paid</span><span class="amt num" id="loanInterestOut">₹0</span></div>
-        <div class="result-row"><span>Total repayment</span><span class="amt num" id="loanTotalOut">₹0</span></div>
-        <div class="bar"><div class="bar-a" id="loanBarP" style="width:50%"></div><div class="bar-b" id="loanBarI" style="width:50%"></div></div>
-        <div class="bar-legend">
-          <span><span class="dot" style="background:var(--violet)"></span>Principal</span>
-          <span><span class="dot" style="background:var(--mint)"></span>Interest</span>
-        </div>
+      <div class="field">
+        <label>Monthly revenue growth <span class="val num" id="pRevGrowthVal">3.0%</span></label>
+        <input type="range" id="pRevGrowth" min="-10" max="20" step="0.1" value="3">
+      </div>
+      <div class="field">
+        <label>Current monthly expenses <span class="val num" id="pExpVal">₹3,50,000</span></label>
+        <input type="range" id="pExp" min="20000" max="9000000" step="10000" value="350000">
+      </div>
+      <div class="field">
+        <label>Monthly expense growth <span class="val num" id="pExpGrowthVal">2.0%</span></label>
+        <input type="range" id="pExpGrowth" min="-10" max="20" step="0.1" value="2">
+      </div>
+      <div class="field">
+        <label>Projection period <span class="val num" id="pMonthsVal">36 mo</span></label>
+        <input type="range" id="pMonths" min="6" max="60" step="1" value="36">
       </div>
     </div>
-  </section>
 
-  <!-- SIP -->
-  <section class="panel" id="sip">
-    <p class="panel-intro">A SIP means investing a fixed amount every month. See what regular investing can compound into over a set number of months, and how much is your own money versus growth.</p>
-    <div class="calc-grid">
-      <div class="glass-panel">
-        <div class="field">
-          <label>Monthly investment <span class="val num" id="sipAmtVal">₹10,000</span></label>
-          <input type="range" id="sipAmt" min="500" max="200000" step="500" value="10000">
-        </div>
-        <div class="field">
-          <label>Expected annual return <span class="val num" id="sipRateVal">12.0%</span></label>
-          <input type="range" id="sipRate" min="1" max="30" step="0.1" value="12">
-        </div>
-        <div class="field">
-          <label>Investment period <span class="val num" id="sipMonthsVal">180 mo</span></label>
-          <input type="range" id="sipMonths" min="6" max="480" step="1" value="180">
-        </div>
+    <div class="proj-result">
+      <div class="proj-result-label">Projected monthly profit, end of period</div>
+      <div class="proj-headline num chrome-text" id="pProfitOut">₹0</div>
+
+      <div class="proj-chart" id="pChart"></div>
+      <div class="proj-labels" id="pChartLabels"></div>
+      <div class="proj-legend">
+        <span><span class="dot" style="background:var(--chrome1)"></span>Revenue</span>
+        <span><span class="dot" style="background:var(--brass)"></span>Expenses</span>
       </div>
 
-      <div class="result">
-        <div class="result-label">Estimated corpus</div>
-        <div class="result-headline num chrome-text" id="sipOut">₹0</div>
-        <div class="result-row"><span>Amount invested</span><span class="amt num" id="sipInvestedOut">₹0</span></div>
-        <div class="result-row"><span>Growth earned</span><span class="amt num" id="sipGrowthOut">₹0</span></div>
-        <div class="result-row"><span>Final value</span><span class="amt num" id="sipFinalOut">₹0</span></div>
-        <div class="bar"><div class="bar-a" id="sipBarP" style="width:50%"></div><div class="bar-b" id="sipBarI" style="width:50%"></div></div>
-        <div class="bar-legend">
-          <span><span class="dot" style="background:var(--violet)"></span>Invested</span>
-          <span><span class="dot" style="background:var(--mint)"></span>Growth</span>
-        </div>
-      </div>
+      <div class="proj-row"><span>Revenue at end of period</span><span class="amt num" id="pRevEndOut">₹0</span></div>
+      <div class="proj-row"><span>Expenses at end of period</span><span class="amt num" id="pExpEndOut">₹0</span></div>
+      <div class="proj-row"><span>Cumulative profit over period</span><span class="amt num" id="pCumProfitOut">₹0</span></div>
     </div>
-  </section>
+  </div>
+  <p class="disclaimer">This is a simplified, straight-line projection meant to explore scenarios — it doesn't account for seasonality, one-off costs, taxes, or funding events. Useful for direction, not for financial statements.</p>
+</section>
 
-  <!-- RETIREMENT -->
-  <section class="panel" id="retire">
-    <p class="panel-intro">A rough estimate of your retirement corpus based on months left until retirement and your monthly investment — plus what that corpus could pay out each month if drawn down steadily for 25 years after retirement.</p>
-    <div class="calc-grid">
-      <div class="glass-panel">
-        <div class="field">
-          <label>Months until retirement <span class="val num" id="retMonthsVal">360 mo</span></label>
-          <input type="range" id="retMonths" min="6" max="540" step="1" value="360">
-        </div>
-        <div class="field">
-          <label>Monthly investment <span class="val num" id="retAmtVal">₹15,000</span></label>
-          <input type="range" id="retAmt" min="1000" max="200000" step="500" value="15000">
-        </div>
-        <div class="field">
-          <label>Expected annual return <span class="val num" id="retRateVal">11.0%</span></label>
-          <input type="range" id="retRate" min="1" max="30" step="0.1" value="11">
-        </div>
-      </div>
-
-      <div class="result">
-        <div class="result-label">Corpus at retirement</div>
-        <div class="result-headline num chrome-text" id="retOut">₹0</div>
-        <div class="result-row"><span>Total invested</span><span class="amt num" id="retInvestedOut">₹0</span></div>
-        <div class="result-row"><span>Growth earned</span><span class="amt num" id="retGrowthOut">₹0</span></div>
-        <div class="result-row"><span>Est. monthly payout, 25 yrs post-retirement</span><span class="amt num" id="retPayoutOut">₹0</span></div>
-        <div class="bar"><div class="bar-a" id="retBarP" style="width:50%"></div><div class="bar-b" id="retBarI" style="width:50%"></div></div>
-        <div class="bar-legend">
-          <span><span class="dot" style="background:var(--violet)"></span>Invested</span>
-          <span><span class="dot" style="background:var(--mint)"></span>Growth</span>
-        </div>
-      </div>
+<section class="block" id="resources">
+  <div class="block-head">
+    <div class="block-label">Resources</div>
+    <h2>A few frameworks worth knowing</h2>
+    <p>Practical starting points, free to use — not a substitute for advice specific to your business.</p>
+  </div>
+  <div class="resource-grid">
+    <div class="resource-card">
+      <h4>The 3 numbers to track weekly</h4>
+      <p>Cash on hand, money coming in over the next 4 weeks, and money going out over the next 4 weeks. Most cash crunches are visible weeks in advance if these are tracked consistently.</p>
     </div>
-  </section>
+    <div class="resource-card">
+      <h4>Building a simple 13-week cash flow</h4>
+      <p>A rolling 13-week view — updated weekly — gives far more warning than monthly accounting ever will, especially for businesses with uneven revenue timing.</p>
+    </div>
+    <div class="resource-card">
+      <h4>Reading a P&amp;L in five minutes</h4>
+      <p>Start at gross margin, not the bottom line — it tells you whether the core business model works before overhead and financing decisions cloud the picture.</p>
+    </div>
+  </div>
+</section>
 
+<section class="block" id="approach">
+  <div class="block-head">
+    <div class="block-label">Approach</div>
+    <h2>How an engagement runs</h2>
+    <p>Straightforward, in order, with no black boxes.</p>
+  </div>
+  <div class="approach-list">
+    <div class="approach-item">
+      <div class="step-num num">01</div>
+      <h4>Discover</h4>
+      <p>Understand the business, the numbers, and the actual problem behind the request.</p>
+    </div>
+    <div class="approach-item">
+      <div class="step-num num">02</div>
+      <h4>Analyze</h4>
+      <p>Pull the financials apart to see what's really driving the outcome.</p>
+    </div>
+    <div class="approach-item">
+      <div class="step-num num">03</div>
+      <h4>Plan</h4>
+      <p>Turn the analysis into a specific, sequenced plan — not just recommendations.</p>
+    </div>
+    <div class="approach-item">
+      <div class="step-num num">04</div>
+      <h4>Execute</h4>
+      <p>Work alongside your team to put the plan into motion and adjust as things change.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="about">
+  <div class="about-wrap">
+    <div class="about-card">
+      <div class="tag">About</div>
+      <p>FinFutur is a founder-led consulting practice, built to bring clear, practical financial thinking to growing businesses.</p>
+      <p>This is a new practice — early engagements are an opportunity to work closely together and build something genuinely useful, with full attention rather than a stretched-thin team.</p>
+    </div>
+    <div class="about-card">
+      <div class="tag">Why work this way</div>
+      <p>Financial consulting is often either too generic to be useful or too dense to act on. FinFutur is built around the opposite: specific to your numbers, and structured so you can actually execute on it.</p>
+      <p>Every engagement starts with a conversation, not a proposal — so the scope fits the actual problem, not a fixed package.</p>
+    </div>
+  </div>
+  <p class="disclaimer">FinFutur provides strategic and analytical support on business finances — not certified or licensed financial, investment, tax, or legal advice. For regulated matters (audits, statutory tax filings, investment advisory, legal structuring), please work with a licensed professional in that area alongside this engagement.</p>
+</section>
+
+<div class="contact-block" id="contact">
+  <h2>Have a financial question worth a proper conversation?</h2>
+  <p>Reach out and describe what you're working through — cash flow, a raise, cost structure, or something else entirely.</p>
+  <a class="btn-primary" href="mailto:hello@finfutur.com">hello@finfutur.com</a>
 </div>
 
 <footer>
-  <span>FinFutur — figures are estimates for planning purposes, not financial advice.</span>
-  <span id="year"></span>
+  <span>© <span id="year"></span> FinFutur. Corporate financial consulting.</span>
+  <span>finfutur.com</span>
 </footer>
 
 <script>
-  const tabs = document.querySelectorAll('.tab');
-  const panels = document.querySelectorAll('.panel');
-  tabs.forEach(tab=>{
-    tab.addEventListener('click', ()=>{
-      tabs.forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false');});
-      panels.forEach(p=>p.classList.remove('active'));
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected','true');
-      document.getElementById(tab.dataset.target).classList.add('active');
-    });
-  });
+  document.getElementById('year').textContent = new Date().getFullYear();
 
   const fmt = n => '₹' + Math.round(n).toLocaleString('en-IN');
-  const cardAmount = document.getElementById('cardAmount');
 
-  // Loan EMI
-  const loanAmt = document.getElementById('loanAmt');
-  const loanRate = document.getElementById('loanRate');
-  const loanTenure = document.getElementById('loanTenure');
-  function calcLoan(){
-    const P = parseFloat(loanAmt.value);
-    const annualRate = parseFloat(loanRate.value);
-    const n = parseFloat(loanTenure.value);
-    const r = annualRate/12/100;
-    const emi = P * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
-    const total = emi*n;
-    const interest = total - P;
-    document.getElementById('loanAmtVal').textContent = fmt(P);
-    document.getElementById('loanRateVal').textContent = annualRate.toFixed(1)+'%';
-    document.getElementById('loanTenureVal').textContent = n+' mo';
-    document.getElementById('emiOut').textContent = fmt(emi) + ' / mo';
-    document.getElementById('loanPrincipalOut').textContent = fmt(P);
-    document.getElementById('loanInterestOut').textContent = fmt(interest);
-    document.getElementById('loanTotalOut').textContent = fmt(total);
-    const pPct = (P/total)*100;
-    document.getElementById('loanBarP').style.width = pPct+'%';
-    document.getElementById('loanBarI').style.width = (100-pPct)+'%';
-    cardAmount.textContent = fmt(emi)+'/mo';
+  const pRev = document.getElementById('pRev');
+  const pRevGrowth = document.getElementById('pRevGrowth');
+  const pExp = document.getElementById('pExp');
+  const pExpGrowth = document.getElementById('pExpGrowth');
+  const pMonths = document.getElementById('pMonths');
+  const pChart = document.getElementById('pChart');
+  const pChartLabels = document.getElementById('pChartLabels');
+
+  function calcProjection(){
+    const rev0 = parseFloat(pRev.value);
+    const revG = parseFloat(pRevGrowth.value)/100;
+    const exp0 = parseFloat(pExp.value);
+    const expG = parseFloat(pExpGrowth.value)/100;
+    const months = parseInt(pMonths.value);
+
+    document.getElementById('pRevVal').textContent = fmt(rev0);
+    document.getElementById('pRevGrowthVal').textContent = (revG*100).toFixed(1)+'%';
+    document.getElementById('pExpVal').textContent = fmt(exp0);
+    document.getElementById('pExpGrowthVal').textContent = (expG*100).toFixed(1)+'%';
+    document.getElementById('pMonthsVal').textContent = months+' mo';
+
+    // monthly series
+    let revenues = [], expenses = [];
+    for(let m=0;m<months;m++){
+      revenues.push(rev0*Math.pow(1+revG,m));
+      expenses.push(exp0*Math.pow(1+expG,m));
+    }
+    const revEnd = revenues[revenues.length-1];
+    const expEnd = expenses[expenses.length-1];
+    const profitEnd = revEnd - expEnd;
+    const cumProfit = revenues.reduce((a,b)=>a+b,0) - expenses.reduce((a,b)=>a+b,0);
+
+    document.getElementById('pProfitOut').textContent = fmt(profitEnd) + ' / mo';
+    document.getElementById('pRevEndOut').textContent = fmt(revEnd);
+    document.getElementById('pExpEndOut').textContent = fmt(expEnd);
+    document.getElementById('pCumProfitOut').textContent = fmt(cumProfit);
+
+    // build yearly snapshot bars (up to 5 points across the period)
+    const points = Math.min(6, Math.ceil(months/6));
+    const step = Math.max(1, Math.floor(months/points));
+    let snapMonths = [];
+    for(let i=step-1;i<months;i+=step) snapMonths.push(i);
+    if(snapMonths[snapMonths.length-1] !== months-1) snapMonths.push(months-1);
+    snapMonths = snapMonths.slice(-6);
+
+    const maxVal = Math.max(...snapMonths.map(i=>Math.max(revenues[i],expenses[i])));
+
+    pChart.innerHTML = '';
+    pChartLabels.innerHTML = '';
+    snapMonths.forEach(i=>{
+      const col = document.createElement('div');
+      col.className = 'proj-bar-col';
+      const revH = Math.max(4, (revenues[i]/maxVal)*130);
+      const expH = Math.max(4, (expenses[i]/maxVal)*130);
+      col.innerHTML = `
+        <div class="proj-bar rev" style="height:${revH}px"></div>
+        <div class="proj-bar exp" style="height:${expH}px"></div>
+      `;
+      pChart.appendChild(col);
+
+      const lbl = document.createElement('span');
+      lbl.textContent = 'Mo ' + (i+1);
+      pChartLabels.appendChild(lbl);
+    });
   }
-  [loanAmt,loanRate,loanTenure].forEach(el=>el.addEventListener('input',calcLoan));
-
-  // SIP
-  const sipAmt = document.getElementById('sipAmt');
-  const sipRate = document.getElementById('sipRate');
-  const sipMonths = document.getElementById('sipMonths');
-  function calcSip(){
-    const monthly = parseFloat(sipAmt.value);
-    const annualRate = parseFloat(sipRate.value);
-    const n = parseFloat(sipMonths.value);
-    const r = annualRate/12/100;
-    const fv = monthly * ((Math.pow(1+r,n)-1)/r) * (1+r);
-    const invested = monthly*n;
-    const growth = fv - invested;
-    document.getElementById('sipAmtVal').textContent = fmt(monthly);
-    document.getElementById('sipRateVal').textContent = annualRate.toFixed(1)+'%';
-    document.getElementById('sipMonthsVal').textContent = n+' mo';
-    document.getElementById('sipOut').textContent = fmt(fv);
-    document.getElementById('sipInvestedOut').textContent = fmt(invested);
-    document.getElementById('sipGrowthOut').textContent = fmt(growth);
-    document.getElementById('sipFinalOut').textContent = fmt(fv);
-    const pPct = (invested/fv)*100;
-    document.getElementById('sipBarP').style.width = pPct+'%';
-    document.getElementById('sipBarI').style.width = (100-pPct)+'%';
-  }
-  [sipAmt,sipRate,sipMonths].forEach(el=>el.addEventListener('input',calcSip));
-
-  // Retirement
-  const retMonths = document.getElementById('retMonths');
-  const retAmt = document.getElementById('retAmt');
-  const retRate = document.getElementById('retRate');
-  function calcRetire(){
-    const n = parseFloat(retMonths.value);
-    const monthly = parseFloat(retAmt.value);
-    const annualRate = parseFloat(retRate.value);
-    const r = annualRate/12/100;
-    const fv = monthly * ((Math.pow(1+r,n)-1)/r) * (1+r);
-    const invested = monthly*n;
-    const growth = fv - invested;
-    const payoutMonths = 25*12;
-    const payout = fv * r / (1-Math.pow(1+r,-payoutMonths));
-    document.getElementById('retMonthsVal').textContent = n+' mo';
-    document.getElementById('retAmtVal').textContent = fmt(monthly);
-    document.getElementById('retRateVal').textContent = annualRate.toFixed(1)+'%';
-    document.getElementById('retOut').textContent = fmt(fv);
-    document.getElementById('retInvestedOut').textContent = fmt(invested);
-    document.getElementById('retGrowthOut').textContent = fmt(growth);
-    document.getElementById('retPayoutOut').textContent = fmt(payout) + ' / mo';
-    const pPct = (invested/fv)*100;
-    document.getElementById('retBarP').style.width = pPct+'%';
-    document.getElementById('retBarI').style.width = (100-pPct)+'%';
-  }
-  [retMonths,retAmt,retRate].forEach(el=>el.addEventListener('input',calcRetire));
-
-  calcLoan();
-  calcSip();
-  calcRetire();
-  document.getElementById('year').textContent = '© ' + new Date().getFullYear() + ' FinFutur';
+  [pRev,pRevGrowth,pExp,pExpGrowth,pMonths].forEach(el=>el.addEventListener('input',calcProjection));
+  calcProjection();
 </script>
 
 </body>
