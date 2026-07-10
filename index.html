@@ -5,30 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FinFutur — Financial Calculators</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#10202E;
-    --paper:#EEF2EF;
-    --card:#FFFFFF;
-    --brass:#9C7A3C;
-    --brass-light:#C6A56A;
-    --slate:#3C5A6E;
-    --rose:#A8443C;
-    --forest:#3F6B52;
-    --line:#D8DED9;
-    --muted:#5E6E68;
+    --bg:#07080A;
+    --glass:rgba(255,255,255,0.045);
+    --glass-hi:rgba(255,255,255,0.07);
+    --glass-border:rgba(255,255,255,0.12);
+    --chrome1:#EEF0F4;
+    --chrome2:#9CA3B0;
+    --chrome3:#CDD3DE;
+    --violet:#7C6CF0;
+    --violet-soft:rgba(124,108,240,0.18);
+    --mint:#00D9A3;
+    --mint-soft:rgba(0,217,163,0.16);
+    --ink-muted:#8B8F99;
+    --white:#F4F5F7;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:'IBM Plex Sans',sans-serif;
+    background:
+      radial-gradient(900px 500px at 90% -8%, rgba(124,108,240,0.16), transparent 60%),
+      radial-gradient(760px 460px at 0% 20%, rgba(0,217,163,0.08), transparent 55%),
+      var(--bg);
+    color:var(--white);
+    font-family:'Inter',sans-serif;
     -webkit-font-smoothing:antialiased;
+    min-height:100vh;
   }
-  .num{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;}
+  .num{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;}
+
+  .chrome-text{
+    background:linear-gradient(115deg, var(--chrome2) 0%, var(--chrome1) 20%, var(--chrome3) 42%, var(--chrome1) 58%, var(--chrome2) 80%, var(--chrome1) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
 
   /* ---------- Header ---------- */
   header{
@@ -36,231 +50,221 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    border-bottom:1px solid var(--line);
   }
-  .wordmark{
-    font-family:'Fraunces',serif;
-    font-size:1.5rem;
-    font-weight:600;
-    letter-spacing:-0.01em;
-    color:var(--ink);
-  }
-  .wordmark span{color:var(--brass);}
-  .tagline{
-    font-size:0.75rem;
-    color:var(--muted);
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    margin-top:2px;
-  }
+  .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.4rem;letter-spacing:-0.01em;}
+  .wordmark .dot{color:var(--violet);}
+  .tagline{font-size:0.7rem;color:var(--ink-muted);letter-spacing:0.14em;text-transform:uppercase;margin-top:3px;}
 
   /* ---------- Hero ---------- */
   .hero{
-    padding:64px 6vw 20px;
-    max-width:760px;
+    padding:56px 6vw 10px;
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:40px;
+    align-items:center;
   }
+  @media (max-width:900px){.hero{grid-template-columns:1fr;}}
   .hero h1{
-    font-family:'Fraunces',serif;
-    font-weight:500;
-    font-size:clamp(2rem,4.2vw,3.1rem);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(2.1rem,4vw,3.1rem);
     line-height:1.12;
-    margin:0 0 18px;
+    margin:0 0 20px;
+    letter-spacing:-0.02em;
+  }
+  .hero p{font-size:1.02rem;line-height:1.7;color:var(--ink-muted);max-width:50ch;margin:0;}
+
+  /* ---------- Metal card visual ---------- */
+  .card-stage{
+    display:flex;
+    justify-content:center;
+    perspective:1200px;
+  }
+  .metal-card{
+    width:340px;
+    height:212px;
+    border-radius:20px;
+    position:relative;
+    transform:rotate3d(1,-1,0.2,14deg);
+    background:
+      linear-gradient(120deg, rgba(255,255,255,0.55) 0%, transparent 8%),
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 4px),
+      linear-gradient(155deg, #E8EAEE 0%, #AEB4C0 22%, #7B8191 40%, #C7CCD6 55%, #91969F 72%, #DEE1E6 100%);
+    box-shadow:
+      0 30px 60px -20px rgba(0,0,0,0.65),
+      inset 0 1px 1px rgba(255,255,255,0.6),
+      inset 0 -20px 40px rgba(0,0,0,0.25);
+    padding:26px 26px;
+    color:#1B1D22;
+    animation:float 6s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{transform:rotate3d(1,-1,0.2,14deg) translateY(0);}
+    50%{transform:rotate3d(1,-1,0.2,10deg) translateY(-10px);}
+  }
+  .chip{
+    width:38px;height:28px;
+    border-radius:6px;
+    background:linear-gradient(135deg,#D8C48A,#9C7A3C);
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,0.15);
+    margin-bottom:34px;
+  }
+  .card-brand{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:1.1rem;
     letter-spacing:-0.01em;
+    margin-bottom:6px;
   }
-  .hero p{
-    font-size:1.05rem;
-    line-height:1.6;
-    color:var(--muted);
-    max-width:52ch;
-    margin:0;
+  .card-number{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.92rem;
+    letter-spacing:0.14em;
+    opacity:0.75;
+    margin-bottom:22px;
   }
+  .card-foot{display:flex;justify-content:space-between;align-items:flex-end;font-size:0.66rem;letter-spacing:0.08em;text-transform:uppercase;opacity:0.65;}
+  .card-foot .amount{font-family:'JetBrains Mono',monospace;font-size:0.95rem;text-transform:none;letter-spacing:0;font-weight:600;opacity:1;}
 
   /* ---------- Tabs ---------- */
   .tabs{
     display:flex;
-    gap:4px;
+    gap:10px;
     padding:0 6vw;
-    margin-top:40px;
-    border-bottom:1px solid var(--line);
+    margin-top:60px;
   }
   .tab{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:0.85rem;
-    background:none;
-    border:none;
-    padding:14px 18px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:0.82rem;
+    background:var(--glass);
+    border:1px solid var(--glass-border);
+    padding:11px 20px;
+    border-radius:999px;
     cursor:pointer;
-    color:var(--muted);
-    border-bottom:2px solid transparent;
-    transition:color .15s ease, border-color .15s ease;
+    color:var(--ink-muted);
+    transition:all .2s ease;
   }
-  .tab.active{color:var(--ink);border-bottom-color:var(--brass);}
-  .tab:hover{color:var(--ink);}
-  .tab:focus-visible{outline:2px solid var(--slate);outline-offset:2px;}
+  .tab.active{
+    color:#0B0C0E;
+    background:linear-gradient(120deg, var(--chrome1), var(--chrome3), var(--chrome1));
+    border-color:transparent;
+  }
+  .tab:hover:not(.active){color:var(--white);border-color:rgba(255,255,255,0.25);}
+  .tab:focus-visible{outline:2px solid var(--violet);outline-offset:2px;}
 
   /* ---------- Calculator layout ---------- */
-  .calc-wrap{
-    padding:44px 6vw 90px;
-  }
+  .calc-wrap{padding:36px 6vw 100px;}
   .panel{display:none;}
-  .panel.active{display:block;animation:fade .35s ease;}
-  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .panel.active{display:block;animation:fade .4s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
-  .calc-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:36px;
-    align-items:start;
-  }
-  @media (max-width:820px){
-    .calc-grid{grid-template-columns:1fr;}
-  }
+  .calc-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:36px;align-items:start;}
+  @media (max-width:860px){.calc-grid{grid-template-columns:1fr;}}
 
-  .inputs{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:4px;
-    padding:32px;
+  .glass-panel{
+    background:var(--glass);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border:1px solid var(--glass-border);
+    border-radius:20px;
+    padding:34px;
   }
-  .field{margin-bottom:26px;}
+  .field{margin-bottom:28px;}
   .field:last-child{margin-bottom:0;}
-  .field label{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    font-size:0.82rem;
-    color:var(--muted);
-    margin-bottom:10px;
-    letter-spacing:0.02em;
-  }
-  .field label .val{
-    font-family:'IBM Plex Mono',monospace;
-    color:var(--ink);
-    font-size:0.95rem;
-    font-weight:500;
-  }
+  .field label{display:flex;justify-content:space-between;align-items:baseline;font-size:0.8rem;color:var(--ink-muted);margin-bottom:12px;font-weight:500;}
+  .field label .val{font-family:'JetBrains Mono',monospace;color:var(--mint);font-size:0.96rem;font-weight:500;}
   input[type=range]{
     width:100%;
     -webkit-appearance:none;
-    height:2px;
-    background:var(--line);
-    border-radius:2px;
+    height:4px;
+    background:rgba(255,255,255,0.12);
+    border-radius:4px;
     outline:none;
   }
   input[type=range]::-webkit-slider-thumb{
     -webkit-appearance:none;
-    width:16px;height:16px;
+    width:18px;height:18px;
     border-radius:50%;
-    background:var(--brass);
+    background:linear-gradient(135deg,var(--violet),#5A4CD1);
     cursor:pointer;
-    border:3px solid var(--card);
-    box-shadow:0 0 0 1px var(--brass);
+    border:2px solid rgba(255,255,255,0.6);
+    box-shadow:0 0 0 5px var(--violet-soft), 0 2px 8px rgba(0,0,0,0.5);
   }
   input[type=range]::-moz-range-thumb{
-    width:16px;height:16px;
+    width:18px;height:18px;
     border-radius:50%;
-    background:var(--brass);
+    background:linear-gradient(135deg,var(--violet),#5A4CD1);
     cursor:pointer;
-    border:3px solid var(--card);
-    box-shadow:0 0 0 1px var(--brass);
+    border:2px solid rgba(255,255,255,0.6);
+    box-shadow:0 0 0 5px var(--violet-soft);
   }
-  input[type=range]:focus-visible{outline:2px solid var(--slate);outline-offset:4px;}
+  input[type=range]:focus-visible{outline:2px solid var(--mint);outline-offset:4px;}
 
-  /* ---------- Ledger / receipt result panel ---------- */
-  .ledger{
-    background:var(--ink);
-    color:var(--paper);
-    border-radius:4px;
-    padding:0;
+  /* ---------- Result panel ---------- */
+  .result{
     position:relative;
+    background:linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border:1px solid var(--glass-border);
+    border-radius:20px;
+    padding:36px 34px;
     overflow:hidden;
   }
-  .ledger::before{
-    content:"";
-    display:block;
-    height:10px;
-    background-image:radial-gradient(circle at 10px 5px, var(--paper) 5px, transparent 5.5px);
-    background-size:20px 10px;
-    background-repeat:repeat-x;
-    background-position:0 5px;
+  .result::before{
+    content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;
+    background:radial-gradient(circle, var(--violet-soft), transparent 70%);
+    pointer-events:none;
   }
-  .ledger-inner{padding:8px 32px 32px;}
-  .ledger-label{
-    font-size:0.72rem;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--brass-light);
-    margin-bottom:6px;
-  }
-  .ledger-headline{
-    font-family:'Fraunces',serif;
-    font-size:2.4rem;
-    font-weight:500;
-    margin:0 0 28px;
-    letter-spacing:-0.01em;
-  }
-  .ledger-row{
-    display:flex;
-    justify-content:space-between;
-    padding:11px 0;
-    border-top:1px dashed rgba(238,242,239,0.18);
-    font-size:0.92rem;
-  }
-  .ledger-row:last-of-type{border-bottom:1px dashed rgba(238,242,239,0.18);}
-  .ledger-row .amt{font-size:1rem;}
+  .result-label{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px;}
+  .result-headline{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:2.5rem;margin:0 0 28px;letter-spacing:-0.02em;}
+  .result-row{display:flex;justify-content:space-between;padding:13px 0;border-top:1px solid var(--glass-border);font-size:0.92rem;color:var(--ink-muted);}
+  .result-row:last-of-type{border-bottom:1px solid var(--glass-border);}
+  .result-row .amt{font-size:0.98rem;color:var(--white);font-weight:600;}
 
-  .bar{
-    display:flex;
-    height:8px;
-    border-radius:4px;
-    overflow:hidden;
-    margin:22px 0 10px;
-    background:rgba(238,242,239,0.12);
-  }
-  .bar-principal{background:var(--forest);}
-  .bar-interest{background:var(--rose);}
-  .bar-legend{
-    display:flex;
-    gap:22px;
-    font-size:0.78rem;
-    color:var(--paper);
-    opacity:0.75;
-  }
-  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;position:relative;top:-1px;}
+  .bar{display:flex;height:7px;border-radius:7px;overflow:hidden;margin:22px 0 12px;background:rgba(255,255,255,0.08);}
+  .bar-a{background:linear-gradient(90deg,#5A4CD1,var(--violet));}
+  .bar-b{background:linear-gradient(90deg,#00A87E,var(--mint));}
+  .bar-legend{display:flex;gap:22px;font-size:0.76rem;color:var(--ink-muted);}
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;position:relative;top:-1px;}
 
-  .panel-intro{
-    max-width:60ch;
-    color:var(--muted);
-    font-size:0.95rem;
-    line-height:1.6;
-    margin:0 0 28px;
-  }
+  .panel-intro{max-width:62ch;color:var(--ink-muted);font-size:0.95rem;line-height:1.7;margin:0 0 28px;}
 
   footer{
     padding:36px 6vw;
-    border-top:1px solid var(--line);
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:12px;
-    font-size:0.8rem;
-    color:var(--muted);
+    border-top:1px solid var(--glass-border);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-size:0.78rem;color:var(--ink-muted);
   }
-  footer a{color:var(--slate);text-decoration:none;}
+  footer a{color:var(--mint);text-decoration:none;}
 </style>
 </head>
 <body>
 
 <header>
   <div>
-    <div class="wordmark">Fin<span>Futur</span></div>
+    <div class="wordmark">Fin<span class="dot">•</span>Futur</div>
     <div class="tagline">Money, worked out</div>
   </div>
 </header>
 
 <section class="hero">
-  <h1>See where your money is actually headed.</h1>
-  <p>Three calculators for the decisions that matter most — what a loan really costs you, what steady investing can grow into, and what retirement will take. Adjust the numbers, read the ledger.</p>
+  <div>
+    <h1>See where your money is <span class="chrome-text">actually</span> headed.</h1>
+    <p>Three calculators for the decisions that matter most — what a loan really costs you, what steady investing can grow into, and what retirement will take.</p>
+  </div>
+  <div class="card-stage">
+    <div class="metal-card">
+      <div class="chip"></div>
+      <div class="card-brand">FinFutur</div>
+      <div class="card-number">•••• •••• •••• 4471</div>
+      <div class="card-foot">
+        <span>Est. corpus</span>
+        <span class="amount" id="cardAmount">₹0</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <nav class="tabs" role="tablist" aria-label="Calculator selection">
@@ -273,40 +277,33 @@
 
   <!-- LOAN EMI -->
   <section class="panel active" id="loan">
-    <p class="panel-intro">Enter your loan amount, interest rate, and tenure. The ledger shows your monthly instalment and how much of the total repayment is interest versus principal.</p>
+    <p class="panel-intro">Enter your loan amount, interest rate, and tenure in months. See your monthly instalment and how much of the total repayment is interest versus principal.</p>
     <div class="calc-grid">
-      <div class="inputs">
+      <div class="glass-panel">
         <div class="field">
           <label>Loan amount <span class="val num" id="loanAmtVal">₹25,00,000</span></label>
           <input type="range" id="loanAmt" min="100000" max="10000000" step="50000" value="2500000">
         </div>
         <div class="field">
           <label>Interest rate (per year) <span class="val num" id="loanRateVal">9.0%</span></label>
-          <input type="range" id="loanRate" min="4" max="18" step="0.1" value="9">
+          <input type="range" id="loanRate" min="1" max="30" step="0.1" value="9">
         </div>
         <div class="field">
-          <label>Tenure <span class="val num" id="loanTenureVal">20 yrs</span></label>
-          <input type="range" id="loanTenure" min="1" max="30" step="1" value="20">
+          <label>Tenure <span class="val num" id="loanTenureVal">240 mo</span></label>
+          <input type="range" id="loanTenure" min="6" max="360" step="1" value="240">
         </div>
       </div>
 
-      <div class="ledger">
-        <div class="ledger-inner">
-          <div class="ledger-label">Monthly instalment</div>
-          <div class="ledger-headline num" id="emiOut">₹0</div>
-
-          <div class="ledger-row"><span>Principal borrowed</span><span class="amt num" id="loanPrincipalOut">₹0</span></div>
-          <div class="ledger-row"><span>Total interest paid</span><span class="amt num" id="loanInterestOut">₹0</span></div>
-          <div class="ledger-row"><span>Total repayment</span><span class="amt num" id="loanTotalOut">₹0</span></div>
-
-          <div class="bar">
-            <div class="bar-principal" id="loanBarP" style="width:50%"></div>
-            <div class="bar-interest" id="loanBarI" style="width:50%"></div>
-          </div>
-          <div class="bar-legend">
-            <span><span class="dot" style="background:var(--forest)"></span>Principal</span>
-            <span><span class="dot" style="background:var(--rose)"></span>Interest</span>
-          </div>
+      <div class="result">
+        <div class="result-label">Monthly instalment</div>
+        <div class="result-headline num chrome-text" id="emiOut">₹0</div>
+        <div class="result-row"><span>Principal borrowed</span><span class="amt num" id="loanPrincipalOut">₹0</span></div>
+        <div class="result-row"><span>Total interest paid</span><span class="amt num" id="loanInterestOut">₹0</span></div>
+        <div class="result-row"><span>Total repayment</span><span class="amt num" id="loanTotalOut">₹0</span></div>
+        <div class="bar"><div class="bar-a" id="loanBarP" style="width:50%"></div><div class="bar-b" id="loanBarI" style="width:50%"></div></div>
+        <div class="bar-legend">
+          <span><span class="dot" style="background:var(--violet)"></span>Principal</span>
+          <span><span class="dot" style="background:var(--mint)"></span>Interest</span>
         </div>
       </div>
     </div>
@@ -314,40 +311,33 @@
 
   <!-- SIP -->
   <section class="panel" id="sip">
-    <p class="panel-intro">A SIP (systematic investment plan) means investing a fixed amount every month. This shows what regular investing can compound into, and how much of the final figure is your own money versus growth.</p>
+    <p class="panel-intro">A SIP means investing a fixed amount every month. See what regular investing can compound into over a set number of months, and how much is your own money versus growth.</p>
     <div class="calc-grid">
-      <div class="inputs">
+      <div class="glass-panel">
         <div class="field">
           <label>Monthly investment <span class="val num" id="sipAmtVal">₹10,000</span></label>
           <input type="range" id="sipAmt" min="500" max="200000" step="500" value="10000">
         </div>
         <div class="field">
           <label>Expected annual return <span class="val num" id="sipRateVal">12.0%</span></label>
-          <input type="range" id="sipRate" min="4" max="20" step="0.1" value="12">
+          <input type="range" id="sipRate" min="1" max="30" step="0.1" value="12">
         </div>
         <div class="field">
-          <label>Investment period <span class="val num" id="sipYearsVal">15 yrs</span></label>
-          <input type="range" id="sipYears" min="1" max="40" step="1" value="15">
+          <label>Investment period <span class="val num" id="sipMonthsVal">180 mo</span></label>
+          <input type="range" id="sipMonths" min="6" max="480" step="1" value="180">
         </div>
       </div>
 
-      <div class="ledger">
-        <div class="ledger-inner">
-          <div class="ledger-label">Estimated corpus</div>
-          <div class="ledger-headline num" id="sipOut">₹0</div>
-
-          <div class="ledger-row"><span>Amount invested</span><span class="amt num" id="sipInvestedOut">₹0</span></div>
-          <div class="ledger-row"><span>Growth earned</span><span class="amt num" id="sipGrowthOut">₹0</span></div>
-          <div class="ledger-row"><span>Final value</span><span class="amt num" id="sipFinalOut">₹0</span></div>
-
-          <div class="bar">
-            <div class="bar-principal" id="sipBarP" style="width:50%"></div>
-            <div class="bar-interest" id="sipBarI" style="width:50%"></div>
-          </div>
-          <div class="bar-legend">
-            <span><span class="dot" style="background:var(--forest)"></span>Invested</span>
-            <span><span class="dot" style="background:var(--rose)"></span>Growth</span>
-          </div>
+      <div class="result">
+        <div class="result-label">Estimated corpus</div>
+        <div class="result-headline num chrome-text" id="sipOut">₹0</div>
+        <div class="result-row"><span>Amount invested</span><span class="amt num" id="sipInvestedOut">₹0</span></div>
+        <div class="result-row"><span>Growth earned</span><span class="amt num" id="sipGrowthOut">₹0</span></div>
+        <div class="result-row"><span>Final value</span><span class="amt num" id="sipFinalOut">₹0</span></div>
+        <div class="bar"><div class="bar-a" id="sipBarP" style="width:50%"></div><div class="bar-b" id="sipBarI" style="width:50%"></div></div>
+        <div class="bar-legend">
+          <span><span class="dot" style="background:var(--violet)"></span>Invested</span>
+          <span><span class="dot" style="background:var(--mint)"></span>Growth</span>
         </div>
       </div>
     </div>
@@ -355,16 +345,12 @@
 
   <!-- RETIREMENT -->
   <section class="panel" id="retire">
-    <p class="panel-intro">A rough estimate of your retirement corpus based on your current age, retirement age, and monthly investment — plus what that corpus could pay out each month if drawn down steadily for 25 years after retirement.</p>
+    <p class="panel-intro">A rough estimate of your retirement corpus based on months left until retirement and your monthly investment — plus what that corpus could pay out each month if drawn down steadily for 25 years after retirement.</p>
     <div class="calc-grid">
-      <div class="inputs">
+      <div class="glass-panel">
         <div class="field">
-          <label>Current age <span class="val num" id="curAgeVal">30 yrs</span></label>
-          <input type="range" id="curAge" min="18" max="60" step="1" value="30">
-        </div>
-        <div class="field">
-          <label>Retirement age <span class="val num" id="retAgeVal">60 yrs</span></label>
-          <input type="range" id="retAge" min="45" max="70" step="1" value="60">
+          <label>Months until retirement <span class="val num" id="retMonthsVal">360 mo</span></label>
+          <input type="range" id="retMonths" min="6" max="540" step="1" value="360">
         </div>
         <div class="field">
           <label>Monthly investment <span class="val num" id="retAmtVal">₹15,000</span></label>
@@ -372,27 +358,20 @@
         </div>
         <div class="field">
           <label>Expected annual return <span class="val num" id="retRateVal">11.0%</span></label>
-          <input type="range" id="retRate" min="4" max="18" step="0.1" value="11">
+          <input type="range" id="retRate" min="1" max="30" step="0.1" value="11">
         </div>
       </div>
 
-      <div class="ledger">
-        <div class="ledger-inner">
-          <div class="ledger-label">Corpus at retirement</div>
-          <div class="ledger-headline num" id="retOut">₹0</div>
-
-          <div class="ledger-row"><span>Total invested</span><span class="amt num" id="retInvestedOut">₹0</span></div>
-          <div class="ledger-row"><span>Growth earned</span><span class="amt num" id="retGrowthOut">₹0</span></div>
-          <div class="ledger-row"><span>Est. monthly payout for 25 yrs post-retirement</span><span class="amt num" id="retPayoutOut">₹0</span></div>
-
-          <div class="bar">
-            <div class="bar-principal" id="retBarP" style="width:50%"></div>
-            <div class="bar-interest" id="retBarI" style="width:50%"></div>
-          </div>
-          <div class="bar-legend">
-            <span><span class="dot" style="background:var(--forest)"></span>Invested</span>
-            <span><span class="dot" style="background:var(--rose)"></span>Growth</span>
-          </div>
+      <div class="result">
+        <div class="result-label">Corpus at retirement</div>
+        <div class="result-headline num chrome-text" id="retOut">₹0</div>
+        <div class="result-row"><span>Total invested</span><span class="amt num" id="retInvestedOut">₹0</span></div>
+        <div class="result-row"><span>Growth earned</span><span class="amt num" id="retGrowthOut">₹0</span></div>
+        <div class="result-row"><span>Est. monthly payout, 25 yrs post-retirement</span><span class="amt num" id="retPayoutOut">₹0</span></div>
+        <div class="bar"><div class="bar-a" id="retBarP" style="width:50%"></div><div class="bar-b" id="retBarI" style="width:50%"></div></div>
+        <div class="bar-legend">
+          <span><span class="dot" style="background:var(--violet)"></span>Invested</span>
+          <span><span class="dot" style="background:var(--mint)"></span>Growth</span>
         </div>
       </div>
     </div>
@@ -406,7 +385,6 @@
 </footer>
 
 <script>
-  // ---------- Tabs ----------
   const tabs = document.querySelectorAll('.tab');
   const panels = document.querySelectorAll('.panel');
   tabs.forEach(tab=>{
@@ -419,110 +397,87 @@
     });
   });
 
-  // ---------- Helpers ----------
   const fmt = n => '₹' + Math.round(n).toLocaleString('en-IN');
+  const cardAmount = document.getElementById('cardAmount');
 
-  // ---------- Loan EMI ----------
+  // Loan EMI
   const loanAmt = document.getElementById('loanAmt');
   const loanRate = document.getElementById('loanRate');
   const loanTenure = document.getElementById('loanTenure');
-
   function calcLoan(){
     const P = parseFloat(loanAmt.value);
     const annualRate = parseFloat(loanRate.value);
-    const years = parseFloat(loanTenure.value);
+    const n = parseFloat(loanTenure.value);
     const r = annualRate/12/100;
-    const n = years*12;
     const emi = P * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
     const total = emi*n;
     const interest = total - P;
-
     document.getElementById('loanAmtVal').textContent = fmt(P);
     document.getElementById('loanRateVal').textContent = annualRate.toFixed(1)+'%';
-    document.getElementById('loanTenureVal').textContent = years+' yrs';
-
+    document.getElementById('loanTenureVal').textContent = n+' mo';
     document.getElementById('emiOut').textContent = fmt(emi) + ' / mo';
     document.getElementById('loanPrincipalOut').textContent = fmt(P);
     document.getElementById('loanInterestOut').textContent = fmt(interest);
     document.getElementById('loanTotalOut').textContent = fmt(total);
-
     const pPct = (P/total)*100;
     document.getElementById('loanBarP').style.width = pPct+'%';
     document.getElementById('loanBarI').style.width = (100-pPct)+'%';
+    cardAmount.textContent = fmt(emi)+'/mo';
   }
   [loanAmt,loanRate,loanTenure].forEach(el=>el.addEventListener('input',calcLoan));
 
-  // ---------- SIP ----------
+  // SIP
   const sipAmt = document.getElementById('sipAmt');
   const sipRate = document.getElementById('sipRate');
-  const sipYears = document.getElementById('sipYears');
-
+  const sipMonths = document.getElementById('sipMonths');
   function calcSip(){
     const monthly = parseFloat(sipAmt.value);
     const annualRate = parseFloat(sipRate.value);
-    const years = parseFloat(sipYears.value);
+    const n = parseFloat(sipMonths.value);
     const r = annualRate/12/100;
-    const n = years*12;
     const fv = monthly * ((Math.pow(1+r,n)-1)/r) * (1+r);
     const invested = monthly*n;
     const growth = fv - invested;
-
     document.getElementById('sipAmtVal').textContent = fmt(monthly);
     document.getElementById('sipRateVal').textContent = annualRate.toFixed(1)+'%';
-    document.getElementById('sipYearsVal').textContent = years+' yrs';
-
+    document.getElementById('sipMonthsVal').textContent = n+' mo';
     document.getElementById('sipOut').textContent = fmt(fv);
     document.getElementById('sipInvestedOut').textContent = fmt(invested);
     document.getElementById('sipGrowthOut').textContent = fmt(growth);
     document.getElementById('sipFinalOut').textContent = fmt(fv);
-
     const pPct = (invested/fv)*100;
     document.getElementById('sipBarP').style.width = pPct+'%';
     document.getElementById('sipBarI').style.width = (100-pPct)+'%';
   }
-  [sipAmt,sipRate,sipYears].forEach(el=>el.addEventListener('input',calcSip));
+  [sipAmt,sipRate,sipMonths].forEach(el=>el.addEventListener('input',calcSip));
 
-  // ---------- Retirement ----------
-  const curAge = document.getElementById('curAge');
-  const retAge = document.getElementById('retAge');
+  // Retirement
+  const retMonths = document.getElementById('retMonths');
   const retAmt = document.getElementById('retAmt');
   const retRate = document.getElementById('retRate');
-
   function calcRetire(){
-    let ca = parseFloat(curAge.value);
-    let ra = parseFloat(retAge.value);
-    if(ra <= ca){ ra = ca+1; retAge.value = ra; }
+    const n = parseFloat(retMonths.value);
     const monthly = parseFloat(retAmt.value);
     const annualRate = parseFloat(retRate.value);
-    const years = ra-ca;
     const r = annualRate/12/100;
-    const n = years*12;
     const fv = monthly * ((Math.pow(1+r,n)-1)/r) * (1+r);
     const invested = monthly*n;
     const growth = fv - invested;
-
-    // rough post-retirement monthly payout over 25 years at same return rate, capital depleting
-    const payoutYears = 25;
-    const pn = payoutYears*12;
-    const payout = fv * r / (1-Math.pow(1+r,-pn));
-
-    document.getElementById('curAgeVal').textContent = ca+' yrs';
-    document.getElementById('retAgeVal').textContent = ra+' yrs';
+    const payoutMonths = 25*12;
+    const payout = fv * r / (1-Math.pow(1+r,-payoutMonths));
+    document.getElementById('retMonthsVal').textContent = n+' mo';
     document.getElementById('retAmtVal').textContent = fmt(monthly);
     document.getElementById('retRateVal').textContent = annualRate.toFixed(1)+'%';
-
     document.getElementById('retOut').textContent = fmt(fv);
     document.getElementById('retInvestedOut').textContent = fmt(invested);
     document.getElementById('retGrowthOut').textContent = fmt(growth);
     document.getElementById('retPayoutOut').textContent = fmt(payout) + ' / mo';
-
     const pPct = (invested/fv)*100;
     document.getElementById('retBarP').style.width = pPct+'%';
     document.getElementById('retBarI').style.width = (100-pPct)+'%';
   }
-  [curAge,retAge,retAmt,retRate].forEach(el=>el.addEventListener('input',calcRetire));
+  [retMonths,retAmt,retRate].forEach(el=>el.addEventListener('input',calcRetire));
 
-  // init
   calcLoan();
   calcSip();
   calcRetire();
