@@ -55,7 +55,7 @@
   }
   .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;letter-spacing:-0.01em;}
   .wordmark span{color:var(--brass);}
-  nav.links{display:flex;gap:15px;font-size:0.76rem;color:var(--muted);}
+  nav.links{display:flex;gap:12px;font-size:0.72rem;color:var(--muted);}
   nav.links a{text-decoration:none;transition:color .15s ease;}
   nav.links a:hover{color:var(--white);}
   .cta-btn{
@@ -247,6 +247,56 @@
   .faq-item.open .faq-a{max-height:320px;}
   .faq-a p{color:var(--muted);font-size:0.94rem;line-height:1.7;margin:0 0 22px;padding-right:40px;}
 
+  /* ---------- Statement Templates ---------- */
+  .subtabs{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap;}
+  .subtab{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.82rem;
+    background:var(--panel);border:1px solid var(--line);
+    padding:10px 18px;border-radius:999px;cursor:pointer;color:var(--muted);
+    transition:all .2s ease;
+  }
+  .subtab.active{color:#0B0C0E;background:linear-gradient(120deg, var(--chrome1), var(--chrome3), var(--chrome1));border-color:transparent;}
+  .subtab:hover:not(.active){color:var(--white);border-color:rgba(232,236,242,0.3);}
+
+  .stmt-panel{display:none;}
+  .stmt-panel.active{display:block;animation:fade .35s ease;}
+
+  .stmt-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:36px;align-items:start;}
+  @media (max-width:900px){.stmt-grid{grid-template-columns:1fr;}}
+
+  .stmt-inputs{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px 30px;}
+  .stmt-group-label{
+    font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--brass);
+    margin:22px 0 14px;font-weight:600;
+  }
+  .stmt-group-label:first-child{margin-top:0;}
+  .stmt-field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px;}
+  @media (max-width:520px){.stmt-field-grid{grid-template-columns:1fr;}}
+  .stmt-field{display:flex;flex-direction:column;gap:6px;}
+  .stmt-field label{font-size:0.78rem;color:var(--muted);}
+  .stmt-field input{
+    font-family:'JetBrains Mono',monospace;font-size:0.92rem;color:var(--white);
+    background:var(--bg);border:1px solid var(--line);border-radius:8px;
+    padding:10px 12px;outline:none;transition:border-color .15s ease;
+    width:100%;
+  }
+  .stmt-field input:focus{border-color:var(--brass);}
+
+  .stmt-result{
+    background:linear-gradient(160deg, var(--panel2), var(--panel));
+    border:1px solid var(--line);border-radius:16px;padding:30px 28px;
+    position:sticky;top:96px;
+  }
+  .stmt-result h4{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;margin:0 0 18px;color:var(--white);}
+  .stmt-r-row{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line);font-size:0.87rem;color:var(--muted);}
+  .stmt-r-row:last-of-type{border-bottom:1px solid var(--line);}
+  .stmt-r-row .amt{color:var(--white);font-weight:600;font-family:'JetBrains Mono',monospace;font-size:0.9rem;}
+  .stmt-r-row.emph{font-weight:600;color:var(--white);}
+  .stmt-r-row.emph .amt{color:var(--brass);font-size:1.05rem;}
+  .stmt-check{margin-top:16px;padding:12px 14px;border-radius:8px;font-size:0.82rem;font-family:'JetBrains Mono',monospace;text-align:center;}
+  .stmt-check.balanced{background:rgba(0,180,120,0.12);color:#4FCB9E;}
+  .stmt-check.unbalanced{background:rgba(200,80,70,0.14);color:#E08A80;}
+
   .resource-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
   @media (max-width:900px){.resource-grid{grid-template-columns:1fr;}}
   .resource-card{
@@ -311,6 +361,7 @@
     <a href="#services">Services</a>
     <a href="#news">Market News</a>
     <a href="#projection">Projection Tool</a>
+    <a href="#templates">Templates</a>
     <a href="#resources">Resources</a>
     <a href="#example">Example</a>
     <a href="#faq">FAQ</a>
@@ -418,6 +469,155 @@
     </div>
   </div>
   <p class="disclaimer">This is a simplified, straight-line projection meant to explore scenarios — it doesn't account for seasonality, one-off costs, taxes, or funding events. Useful for direction, not for financial statements.</p>
+</section>
+
+<section class="block" id="templates">
+  <div class="block-head">
+    <div class="block-label">Free Tool</div>
+    <h2>Financial statement templates</h2>
+    <p>Type your own numbers in and see each statement build itself — a quick way to see where you stand before formalizing anything in accounting software.</p>
+  </div>
+
+  <div class="subtabs" role="tablist" aria-label="Statement selection">
+    <button class="subtab active" data-target="stmt-pl">Profit &amp; Loss</button>
+    <button class="subtab" data-target="stmt-bs">Balance Sheet</button>
+    <button class="subtab" data-target="stmt-cf">Cash Flow</button>
+  </div>
+
+  <!-- P&L -->
+  <div class="stmt-panel active" id="stmt-pl">
+    <div class="stmt-grid">
+      <div class="stmt-inputs">
+        <div class="stmt-group-label">Revenue</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Sales revenue</label><input type="number" id="pl_sales" value="500000"></div>
+          <div class="stmt-field"><label>Other operating income</label><input type="number" id="pl_otherinc" value="0"></div>
+        </div>
+        <div class="stmt-group-label">Cost of Goods Sold</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Materials / direct costs</label><input type="number" id="pl_materials" value="180000"></div>
+          <div class="stmt-field"><label>Direct labour</label><input type="number" id="pl_directlabour" value="60000"></div>
+        </div>
+        <div class="stmt-group-label">Operating Expenses</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Salaries &amp; wages</label><input type="number" id="pl_salaries" value="80000"></div>
+          <div class="stmt-field"><label>Rent &amp; utilities</label><input type="number" id="pl_rent" value="25000"></div>
+          <div class="stmt-field"><label>Marketing &amp; sales</label><input type="number" id="pl_marketing" value="20000"></div>
+          <div class="stmt-field"><label>Admin &amp; office</label><input type="number" id="pl_admin" value="15000"></div>
+          <div class="stmt-field"><label>Professional fees</label><input type="number" id="pl_prof" value="8000"></div>
+          <div class="stmt-field"><label>Other operating expenses</label><input type="number" id="pl_otherexp" value="10000"></div>
+        </div>
+        <div class="stmt-group-label">Other Items</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Depreciation &amp; amortisation</label><input type="number" id="pl_dep" value="12000"></div>
+          <div class="stmt-field"><label>Interest expense</label><input type="number" id="pl_interest" value="6000"></div>
+          <div class="stmt-field"><label>Tax expense</label><input type="number" id="pl_tax" value="18000"></div>
+        </div>
+      </div>
+      <div class="stmt-result">
+        <h4>Result</h4>
+        <div class="stmt-r-row"><span>Total revenue</span><span class="amt" id="pl_totalrev">₹0</span></div>
+        <div class="stmt-r-row"><span>Total COGS</span><span class="amt" id="pl_totalcogs">₹0</span></div>
+        <div class="stmt-r-row emph"><span>Gross profit</span><span class="amt" id="pl_grossprofit">₹0</span></div>
+        <div class="stmt-r-row"><span>Total operating expenses</span><span class="amt" id="pl_totalopex">₹0</span></div>
+        <div class="stmt-r-row emph"><span>EBITDA</span><span class="amt" id="pl_ebitda">₹0</span></div>
+        <div class="stmt-r-row"><span>Profit before tax</span><span class="amt" id="pl_pbt">₹0</span></div>
+        <div class="stmt-r-row emph"><span>Net profit</span><span class="amt" id="pl_netprofit">₹0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BALANCE SHEET -->
+  <div class="stmt-panel" id="stmt-bs">
+    <div class="stmt-grid">
+      <div class="stmt-inputs">
+        <div class="stmt-group-label">Current Assets</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Cash &amp; bank balances</label><input type="number" id="bs_cash" value="200000"></div>
+          <div class="stmt-field"><label>Accounts receivable</label><input type="number" id="bs_ar" value="150000"></div>
+          <div class="stmt-field"><label>Inventory</label><input type="number" id="bs_inv" value="100000"></div>
+          <div class="stmt-field"><label>Other current assets</label><input type="number" id="bs_oca" value="20000"></div>
+        </div>
+        <div class="stmt-group-label">Non-Current Assets</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Property, plant &amp; equipment</label><input type="number" id="bs_ppe" value="500000"></div>
+          <div class="stmt-field"><label>Less: accumulated depreciation</label><input type="number" id="bs_accdep" value="-80000"></div>
+          <div class="stmt-field"><label>Other non-current assets</label><input type="number" id="bs_onca" value="30000"></div>
+        </div>
+        <div class="stmt-group-label">Current Liabilities</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Accounts payable</label><input type="number" id="bs_ap" value="120000"></div>
+          <div class="stmt-field"><label>Short-term debt</label><input type="number" id="bs_std" value="50000"></div>
+          <div class="stmt-field"><label>Other current liabilities</label><input type="number" id="bs_ocl" value="15000"></div>
+        </div>
+        <div class="stmt-group-label">Non-Current Liabilities</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Long-term debt</label><input type="number" id="bs_ltd" value="200000"></div>
+          <div class="stmt-field"><label>Other non-current liabilities</label><input type="number" id="bs_oncl" value="10000"></div>
+        </div>
+        <div class="stmt-group-label">Shareholders' Equity</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Share capital</label><input type="number" id="bs_share" value="400000"></div>
+          <div class="stmt-field"><label>Retained earnings</label><input type="number" id="bs_re" value="125000"></div>
+        </div>
+      </div>
+      <div class="stmt-result">
+        <h4>Result</h4>
+        <div class="stmt-r-row"><span>Total current assets</span><span class="amt" id="bs_totalca">₹0</span></div>
+        <div class="stmt-r-row"><span>Total non-current assets</span><span class="amt" id="bs_totalnca">₹0</span></div>
+        <div class="stmt-r-row emph"><span>Total assets</span><span class="amt" id="bs_totalassets">₹0</span></div>
+        <div class="stmt-r-row"><span>Total current liabilities</span><span class="amt" id="bs_totalcl">₹0</span></div>
+        <div class="stmt-r-row"><span>Total non-current liabilities</span><span class="amt" id="bs_totalncl">₹0</span></div>
+        <div class="stmt-r-row"><span>Total liabilities</span><span class="amt" id="bs_totalliab">₹0</span></div>
+        <div class="stmt-r-row"><span>Total equity</span><span class="amt" id="bs_totaleq">₹0</span></div>
+        <div class="stmt-r-row emph"><span>Liabilities + equity</span><span class="amt" id="bs_totalliabeq">₹0</span></div>
+        <div class="stmt-check" id="bs_check">Balanced</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASH FLOW -->
+  <div class="stmt-panel" id="stmt-cf">
+    <div class="stmt-grid">
+      <div class="stmt-inputs">
+        <div class="stmt-group-label">Operating Activities</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Net profit (from P&amp;L)</label><input type="number" id="cf_netprofit" value="76000"></div>
+          <div class="stmt-field"><label>Add: depreciation</label><input type="number" id="cf_dep" value="12000"></div>
+          <div class="stmt-field"><label>Change in receivables</label><input type="number" id="cf_ar" value="-15000"></div>
+          <div class="stmt-field"><label>Change in inventory</label><input type="number" id="cf_inv" value="-8000"></div>
+          <div class="stmt-field"><label>Change in payables</label><input type="number" id="cf_ap" value="10000"></div>
+        </div>
+        <div class="stmt-group-label">Investing Activities</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Purchase of fixed assets</label><input type="number" id="cf_capex" value="-40000"></div>
+          <div class="stmt-field"><label>Sale of fixed assets</label><input type="number" id="cf_assetsale" value="0"></div>
+          <div class="stmt-field"><label>Purchase / sale of investments</label><input type="number" id="cf_invest" value="0"></div>
+        </div>
+        <div class="stmt-group-label">Financing Activities</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Proceeds from borrowings</label><input type="number" id="cf_borrow" value="0"></div>
+          <div class="stmt-field"><label>Repayment of borrowings</label><input type="number" id="cf_repay" value="-20000"></div>
+          <div class="stmt-field"><label>Dividends paid</label><input type="number" id="cf_div" value="0"></div>
+        </div>
+        <div class="stmt-group-label">Opening Balance</div>
+        <div class="stmt-field-grid">
+          <div class="stmt-field"><label>Opening cash balance</label><input type="number" id="cf_opening" value="150000"></div>
+        </div>
+      </div>
+      <div class="stmt-result">
+        <h4>Result</h4>
+        <div class="stmt-r-row emph"><span>Net cash from operations</span><span class="amt" id="cf_cfo">₹0</span></div>
+        <div class="stmt-r-row emph"><span>Net cash from investing</span><span class="amt" id="cf_cfi">₹0</span></div>
+        <div class="stmt-r-row emph"><span>Net cash from financing</span><span class="amt" id="cf_cff">₹0</span></div>
+        <div class="stmt-r-row"><span>Net change in cash</span><span class="amt" id="cf_netchange">₹0</span></div>
+        <div class="stmt-r-row"><span>Opening cash balance</span><span class="amt" id="cf_openingout">₹0</span></div>
+        <div class="stmt-r-row emph"><span>Closing cash balance</span><span class="amt" id="cf_closing">₹0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="disclaimer">These figures stay in your browser only — nothing is saved or sent anywhere. For a downloadable version with month-by-month columns and formulas, use the Excel templates available on request.</p>
 </section>
 
 <section class="block" id="resources">
@@ -569,7 +769,99 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // ---------- FAQ accordion ----------
+  // ---------- Statement template sub-tabs ----------
+  document.querySelectorAll('.subtab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.subtab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.stmt-panel').forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.target).classList.add('active');
+    });
+  });
+
+  const fmtStmt = n => {
+    const neg = n < 0;
+    const v = '₹' + Math.round(Math.abs(n)).toLocaleString('en-IN');
+    return neg ? '(' + v + ')' : v;
+  };
+  const num = id => parseFloat(document.getElementById(id).value) || 0;
+
+  // ---------- P&L live calc ----------
+  function calcPL(){
+    const totalRev = num('pl_sales') + num('pl_otherinc');
+    const totalCogs = num('pl_materials') + num('pl_directlabour');
+    const grossProfit = totalRev - totalCogs;
+    const totalOpex = num('pl_salaries')+num('pl_rent')+num('pl_marketing')+num('pl_admin')+num('pl_prof')+num('pl_otherexp');
+    const ebitda = grossProfit - totalOpex;
+    const pbt = ebitda - num('pl_dep') - num('pl_interest');
+    const netProfit = pbt - num('pl_tax');
+
+    document.getElementById('pl_totalrev').textContent = fmtStmt(totalRev);
+    document.getElementById('pl_totalcogs').textContent = fmtStmt(totalCogs);
+    document.getElementById('pl_grossprofit').textContent = fmtStmt(grossProfit);
+    document.getElementById('pl_totalopex').textContent = fmtStmt(totalOpex);
+    document.getElementById('pl_ebitda').textContent = fmtStmt(ebitda);
+    document.getElementById('pl_pbt').textContent = fmtStmt(pbt);
+    document.getElementById('pl_netprofit').textContent = fmtStmt(netProfit);
+  }
+  ['pl_sales','pl_otherinc','pl_materials','pl_directlabour','pl_salaries','pl_rent','pl_marketing','pl_admin','pl_prof','pl_otherexp','pl_dep','pl_interest','pl_tax']
+    .forEach(id=>document.getElementById(id).addEventListener('input',calcPL));
+
+  // ---------- Balance Sheet live calc ----------
+  function calcBS(){
+    const totalCA = num('bs_cash')+num('bs_ar')+num('bs_inv')+num('bs_oca');
+    const totalNCA = num('bs_ppe')+num('bs_accdep')+num('bs_onca');
+    const totalAssets = totalCA + totalNCA;
+    const totalCL = num('bs_ap')+num('bs_std')+num('bs_ocl');
+    const totalNCL = num('bs_ltd')+num('bs_oncl');
+    const totalLiab = totalCL + totalNCL;
+    const totalEq = num('bs_share')+num('bs_re');
+    const totalLiabEq = totalLiab + totalEq;
+
+    document.getElementById('bs_totalca').textContent = fmtStmt(totalCA);
+    document.getElementById('bs_totalnca').textContent = fmtStmt(totalNCA);
+    document.getElementById('bs_totalassets').textContent = fmtStmt(totalAssets);
+    document.getElementById('bs_totalcl').textContent = fmtStmt(totalCL);
+    document.getElementById('bs_totalncl').textContent = fmtStmt(totalNCL);
+    document.getElementById('bs_totalliab').textContent = fmtStmt(totalLiab);
+    document.getElementById('bs_totaleq').textContent = fmtStmt(totalEq);
+    document.getElementById('bs_totalliabeq').textContent = fmtStmt(totalLiabEq);
+
+    const diff = totalAssets - totalLiabEq;
+    const checkEl = document.getElementById('bs_check');
+    if(Math.abs(diff) < 1){
+      checkEl.textContent = 'Balanced';
+      checkEl.className = 'stmt-check balanced';
+    } else {
+      checkEl.textContent = 'Out of balance by ' + fmtStmt(diff);
+      checkEl.className = 'stmt-check unbalanced';
+    }
+  }
+  ['bs_cash','bs_ar','bs_inv','bs_oca','bs_ppe','bs_accdep','bs_onca','bs_ap','bs_std','bs_ocl','bs_ltd','bs_oncl','bs_share','bs_re']
+    .forEach(id=>document.getElementById(id).addEventListener('input',calcBS));
+
+  // ---------- Cash Flow live calc ----------
+  function calcCF(){
+    const cfo = num('cf_netprofit')+num('cf_dep')+num('cf_ar')+num('cf_inv')+num('cf_ap');
+    const cfi = num('cf_capex')+num('cf_assetsale')+num('cf_invest');
+    const cff = num('cf_borrow')+num('cf_repay')+num('cf_div');
+    const netChange = cfo + cfi + cff;
+    const opening = num('cf_opening');
+    const closing = opening + netChange;
+
+    document.getElementById('cf_cfo').textContent = fmtStmt(cfo);
+    document.getElementById('cf_cfi').textContent = fmtStmt(cfi);
+    document.getElementById('cf_cff').textContent = fmtStmt(cff);
+    document.getElementById('cf_netchange').textContent = fmtStmt(netChange);
+    document.getElementById('cf_openingout').textContent = fmtStmt(opening);
+    document.getElementById('cf_closing').textContent = fmtStmt(closing);
+  }
+  ['cf_netprofit','cf_dep','cf_ar','cf_inv','cf_ap','cf_capex','cf_assetsale','cf_invest','cf_borrow','cf_repay','cf_div','cf_opening']
+    .forEach(id=>document.getElementById(id).addEventListener('input',calcCF));
+
+  calcPL();
+  calcBS();
+  calcCF();
   document.querySelectorAll('.faq-item').forEach(item=>{
     item.querySelector('.faq-q').addEventListener('click', ()=>{
       const wasOpen = item.classList.contains('open');
