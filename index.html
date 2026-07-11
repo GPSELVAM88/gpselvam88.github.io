@@ -8,16 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#08090B;
-    --panel:#111317;
-    --panel2:#161920;
-    --chrome1:#EEF0F4;
-    --chrome2:#9CA3B0;
-    --chrome3:#CDD3DE;
+    --bg:#0A121E;
+    --panel:#101A2A;
+    --panel2:#142134;
+    --chrome1:#E9EDF3;
+    --chrome2:#8D9AAE;
+    --chrome3:#C3CCDA;
     --brass:#C9A768;
-    --line:rgba(238,240,244,0.1);
-    --muted:#8B8F99;
-    --white:#F4F5F7;
+    --line:rgba(232,237,244,0.1);
+    --muted:#8891A2;
+    --white:#F1F4F8;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -25,7 +25,7 @@
     margin:0;
     background:
       radial-gradient(1000px 520px at 90% -10%, rgba(201,167,104,0.08), transparent 60%),
-      radial-gradient(800px 460px at 0% 30%, rgba(156,163,176,0.06), transparent 55%),
+      radial-gradient(800px 460px at 0% 30%, rgba(93,124,168,0.14), transparent 55%),
       var(--bg);
     color:var(--white);
     font-family:'Inter',sans-serif;
@@ -49,9 +49,13 @@
     -webkit-backdrop-filter:blur(14px);
     z-index:10;
   }
+  header::after{
+    content:"";position:absolute;bottom:-1px;left:0;right:0;height:1px;
+    background:linear-gradient(90deg, transparent, rgba(238,240,244,0.35) 50%, transparent);
+  }
   .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;letter-spacing:-0.01em;}
   .wordmark span{color:var(--brass);}
-  nav.links{display:flex;gap:22px;font-size:0.84rem;color:var(--muted);}
+  nav.links{display:flex;gap:15px;font-size:0.76rem;color:var(--muted);}
   nav.links a{text-decoration:none;transition:color .15s ease;}
   nav.links a:hover{color:var(--white);}
   .cta-btn{
@@ -63,6 +67,14 @@
     border-radius:999px;
     text-decoration:none;
     white-space:nowrap;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 8px 20px -6px rgba(238,240,244,0.35), inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .cta-btn::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:50%;
+    background:linear-gradient(180deg, rgba(255,255,255,0.5), transparent);
+    pointer-events:none;
   }
   @media (max-width:900px){nav.links{display:none;}}
 
@@ -83,11 +95,22 @@
     font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.9rem;
     background:linear-gradient(120deg, var(--chrome1), var(--chrome3), var(--chrome1));
     color:#0B0C0E;padding:14px 28px;border-radius:10px;text-decoration:none;
+    position:relative;overflow:hidden;
+    box-shadow:0 14px 30px -10px rgba(238,240,244,0.4), inset 0 1px 0 rgba(255,255,255,0.7);
+    transition:transform .2s ease, box-shadow .2s ease;
   }
+  .btn-primary::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:50%;
+    background:linear-gradient(180deg, rgba(255,255,255,0.55), transparent);
+    pointer-events:none;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 36px -10px rgba(238,240,244,0.5), inset 0 1px 0 rgba(255,255,255,0.8);}
   .btn-secondary{
     font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.9rem;
-    background:transparent;color:var(--white);padding:14px 28px;border-radius:10px;
+    background:linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01));
+    color:var(--white);padding:14px 28px;border-radius:10px;
     border:1px solid var(--line);text-decoration:none;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.1);
   }
 
   /* ---------- Section shell ---------- */
@@ -156,8 +179,75 @@
   .proj-row:last-of-type{border-bottom:1px solid var(--line);}
   .proj-row .amt{color:var(--white);font-weight:600;font-size:0.95rem;}
 
-  /* ---------- Resources ---------- */
-  .resource-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  /* ---------- Market News ---------- */
+  .news-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line);}
+  .news-item{
+    display:block;padding:22px 4px;border-bottom:1px solid var(--line);
+    text-decoration:none;transition:opacity .15s ease;
+  }
+  .news-item:hover{opacity:0.75;}
+  .news-item .news-meta{font-size:0.72rem;color:var(--brass);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+  .news-item h4{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.02rem;margin:0;color:var(--white);line-height:1.4;}
+  .news-status{color:var(--muted);font-size:0.9rem;padding:20px 4px;}
+  .news-status a{color:var(--brass);}
+
+  /* ---------- Glossy sheen (shared) ---------- */
+  .service-card, .resource-card, .glass-panel, .proj-result, .about-card, .contact-block{
+    position:relative;
+    overflow:hidden;
+  }
+  .service-card::before, .resource-card::before, .glass-panel::before, .proj-result::before, .about-card::before, .contact-block::before{
+    content:"";
+    position:absolute;top:0;left:0;right:0;height:55%;
+    background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0) 100%);
+    pointer-events:none;
+  }
+  .service-card::after, .resource-card::after, .glass-panel::after, .proj-result::after, .about-card::after, .contact-block::after{
+    content:"";
+    position:absolute;top:-60%;left:-25%;width:55%;height:220%;
+    background:linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%);
+    transform:rotate(8deg);
+    pointer-events:none;
+  }
+  .service-card, .resource-card, .about-card{
+    box-shadow:0 24px 50px -28px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.09);
+  }
+  .glass-panel, .proj-result{
+    box-shadow:0 28px 60px -30px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .contact-block{
+    box-shadow:0 30px 70px -32px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .service-card:hover, .resource-card:hover{
+    transform:translateY(-3px);
+    transition:transform .25s ease, box-shadow .25s ease;
+    box-shadow:0 30px 60px -26px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.14);
+  }
+  /* ---------- Illustrative example ---------- */
+  .example-wrap{display:grid;grid-template-columns:0.8fr 1.2fr;gap:44px;align-items:start;}
+  @media (max-width:900px){.example-wrap{grid-template-columns:1fr;}}
+  .example-tag{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--brass);margin-bottom:14px;font-weight:600;}
+  .example-side p{color:var(--muted);font-size:0.98rem;line-height:1.75;margin:0;}
+  .example-steps{display:flex;flex-direction:column;gap:26px;}
+  .example-step{border-left:2px solid var(--line);padding-left:22px;}
+  .example-step .ex-num{color:var(--chrome2);font-size:0.85rem;margin-bottom:8px;font-weight:600;}
+  .example-step p{color:var(--muted);font-size:0.92rem;line-height:1.7;margin:0;}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{border-top:1px solid var(--line);}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    width:100%;text-align:left;background:none;border:none;cursor:pointer;
+    padding:22px 4px;display:flex;justify-content:space-between;align-items:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;color:var(--white);
+  }
+  .faq-icon{font-family:'JetBrains Mono',monospace;color:var(--brass);font-size:1.1rem;transition:transform .2s ease;flex-shrink:0;margin-left:16px;}
+  .faq-item.open .faq-icon{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .faq-item.open .faq-a{max-height:320px;}
+  .faq-a p{color:var(--muted);font-size:0.94rem;line-height:1.7;margin:0 0 22px;padding-right:40px;}
+
+  .resource-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
   @media (max-width:900px){.resource-grid{grid-template-columns:1fr;}}
   .resource-card{
     border:1px solid var(--line);border-radius:16px;padding:28px;
@@ -219,9 +309,11 @@
   <div class="wordmark">Fin<span>Futur</span></div>
   <nav class="links">
     <a href="#services">Services</a>
+    <a href="#news">Market News</a>
     <a href="#projection">Projection Tool</a>
     <a href="#resources">Resources</a>
-    <a href="#approach">Approach</a>
+    <a href="#example">Example</a>
+    <a href="#faq">FAQ</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -265,6 +357,17 @@
       <h3>Cost &amp; Efficiency Review</h3>
       <p>A practical look at where spend is working for the business and where it quietly isn't.</p>
     </div>
+  </div>
+</section>
+
+<section class="block" id="news">
+  <div class="block-head">
+    <div class="block-label">Live</div>
+    <h2>Market news</h2>
+    <p>Pulled live from Economic Times Markets each time this page loads.</p>
+  </div>
+  <div class="news-list" id="newsList">
+    <div class="news-status">Loading latest headlines…</div>
   </div>
 </section>
 
@@ -326,15 +429,82 @@
   <div class="resource-grid">
     <div class="resource-card">
       <h4>The 3 numbers to track weekly</h4>
-      <p>Cash on hand, money coming in over the next 4 weeks, and money going out over the next 4 weeks. Most cash crunches are visible weeks in advance if these are tracked consistently.</p>
+      <p>Cash on hand, money coming in over the next 4 weeks, and money going out over the next 4 weeks. Most cash crunches are visible weeks in advance if these three are tracked consistently — the businesses that get caught off guard are almost always the ones checking their bank balance instead of their pipeline.</p>
     </div>
     <div class="resource-card">
       <h4>Building a simple 13-week cash flow</h4>
-      <p>A rolling 13-week view — updated weekly — gives far more warning than monthly accounting ever will, especially for businesses with uneven revenue timing.</p>
+      <p>A rolling 13-week view — updated weekly, not monthly — gives far more warning than standard accounting ever will, especially for businesses with uneven revenue timing. Thirteen weeks is long enough to see a problem coming and short enough that the numbers stay realistic instead of turning into guesswork.</p>
     </div>
     <div class="resource-card">
       <h4>Reading a P&amp;L in five minutes</h4>
-      <p>Start at gross margin, not the bottom line — it tells you whether the core business model works before overhead and financing decisions cloud the picture.</p>
+      <p>Start at gross margin, not the bottom line — it tells you whether the core business model works before overhead and financing decisions cloud the picture. If gross margin is healthy but the bottom line isn't, the problem is usually structural, not operational — a different conversation entirely.</p>
+    </div>
+    <div class="resource-card">
+      <h4>Why profitable businesses still run out of cash</h4>
+      <p>Profit is an accounting figure; cash is a timing problem. A business can be profitable on paper and still run out of money if customers pay slowly, inventory ties up capital, or growth itself consumes cash faster than it returns it. Growth is often the cause, not the cure.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="example">
+  <div class="block-head">
+    <div class="block-label">Illustrative example</div>
+    <h2>How an engagement might play out</h2>
+    <p>A hypothetical scenario — not a real client — to show what the four-step approach looks like applied to an actual situation.</p>
+  </div>
+  <div class="example-wrap">
+    <div class="example-side">
+      <div class="example-tag">The situation</div>
+      <p>A growing distribution business is profitable on paper, but repeatedly tight on cash by the third week of every month — payroll and supplier payments keep landing before customer payments come in.</p>
+    </div>
+    <div class="example-steps">
+      <div class="example-step">
+        <div class="ex-num num">01 — Discover</div>
+        <p>A short set of conversations with the founder and finance lead surface the real pattern: customer payment terms are 45 days, but supplier terms are 15 — a structural mismatch, not a spending problem.</p>
+      </div>
+      <div class="example-step">
+        <div class="ex-num num">02 — Analyze</div>
+        <p>Mapping actual cash timing (not just totals) shows the gap is roughly three weeks wide every cycle, and it widens further whenever a large order comes in — meaning growth is making the problem worse, not better.</p>
+      </div>
+      <div class="example-step">
+        <div class="ex-num num">03 — Plan</div>
+        <p>Options are laid out plainly: renegotiate supplier terms, introduce early-payment incentives for customers, or arrange short-term working capital — each with its real cost and trade-off, not a single "right answer" handed down.</p>
+      </div>
+      <div class="example-step">
+        <div class="ex-num num">04 — Execute</div>
+        <p>The business moves on two fronts at once — a modest early-payment discount for its largest customers, and a small working-capital line held in reserve rather than drawn immediately — closing the timing gap without over-borrowing.</p>
+      </div>
+    </div>
+  </div>
+  <p class="disclaimer">This example is illustrative only, built to show how the approach applies in practice — it does not describe a real client or engagement.</p>
+</section>
+
+<section class="block" id="faq">
+  <div class="block-head">
+    <div class="block-label">FAQ</div>
+    <h2>Questions worth answering upfront</h2>
+    <p>The things people usually ask before reaching out.</p>
+  </div>
+  <div class="faq-list" id="faqList">
+    <div class="faq-item">
+      <button class="faq-q">Are you a certified financial advisor?<span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>No — FinFutur provides strategic and analytical consulting on business finances, not certified or licensed financial, investment, tax, or legal advice. For regulated matters, work with a licensed professional in that area alongside this engagement.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What size businesses do you work with?<span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Primarily small to mid-sized businesses that need practical financial thinking but don't have (or don't yet need) a full-time finance leader. If you're not sure it's a fit, the first conversation will make that clear quickly.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">How long does an engagement typically take?<span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>It depends entirely on the problem — some questions are answerable in a focused week or two, others (like an ongoing forecasting process) run longer. Scope gets defined after the first conversation, not before.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Is my financial information kept confidential?<span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Yes. Anything shared during an engagement is treated as confidential, and a formal confidentiality agreement can be put in place before any detailed information is exchanged, if you'd like one.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What does an engagement cost?<span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Pricing depends on scope, so there isn't a fixed rate card — the first conversation is free, and any proposal that follows will lay out cost and scope clearly before anything is agreed.</p></div>
     </div>
   </div>
 </section>
@@ -398,6 +568,42 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---------- FAQ accordion ----------
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.querySelector('.faq-q').addEventListener('click', ()=>{
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+
+  // ---------- Live market news ----------
+  const NEWS_FEED = 'https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms';
+  const newsList = document.getElementById('newsList');
+
+  fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(NEWS_FEED))
+    .then(res => res.json())
+    .then(data => {
+      if(data.status !== 'ok' || !data.items || !data.items.length){
+        throw new Error('feed empty');
+      }
+      newsList.innerHTML = '';
+      data.items.slice(0,6).forEach(item=>{
+        const a = document.createElement('a');
+        a.className = 'news-item';
+        a.href = item.link;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        const date = new Date(item.pubDate);
+        const dateStr = date.toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
+        a.innerHTML = `<div class="news-meta">${dateStr}</div><h4>${item.title}</h4>`;
+        newsList.appendChild(a);
+      });
+    })
+    .catch(()=>{
+      newsList.innerHTML = '<div class="news-status">Couldn\'t load live headlines right now — <a href="https://economictimes.indiatimes.com/markets" target="_blank" rel="noopener noreferrer">view market news directly</a>.</div>';
+    });
 
   const fmt = n => '₹' + Math.round(n).toLocaleString('en-IN');
 
