@@ -247,6 +247,44 @@
   .faq-item.open .faq-a{max-height:320px;}
   .faq-a p{color:var(--muted);font-size:0.94rem;line-height:1.7;margin:0 0 22px;padding-right:40px;}
 
+  /* ---------- Financial Ratios ---------- */
+  .ratio-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:36px;}
+  @media (max-width:900px){.ratio-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:520px){.ratio-grid{grid-template-columns:1fr;}}
+  .ratio-card{
+    background:linear-gradient(160deg, var(--panel2), var(--panel));
+    border:1px solid var(--line);border-radius:16px;
+    padding:24px 20px;text-align:center;
+  }
+  .ratio-gauge{
+    width:104px;height:104px;border-radius:50%;
+    background:conic-gradient(var(--gauge-color, var(--brass)) calc(var(--pct,0)*1%), rgba(232,236,242,0.1) 0);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 16px;position:relative;
+  }
+  .ratio-gauge::before{
+    content:"";position:absolute;inset:9px;background:var(--panel2);border-radius:50%;
+  }
+  .ratio-gauge .ratio-value{
+    position:relative;z-index:1;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:1.05rem;color:var(--white);
+  }
+  .ratio-label{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.92rem;margin-bottom:6px;}
+  .ratio-sub{font-size:0.72rem;color:var(--muted);}
+  .ratio-status{
+    display:inline-block;margin-top:10px;padding:3px 10px;border-radius:999px;
+    font-size:0.68rem;letter-spacing:0.04em;text-transform:uppercase;font-weight:600;
+  }
+  .ratio-status.good{background:rgba(0,180,120,0.15);color:#4FCB9E;}
+  .ratio-status.ok{background:rgba(201,167,104,0.18);color:var(--brass);}
+  .ratio-status.watch{background:rgba(200,80,70,0.15);color:#E08A80;}
+
+  .chart-card{
+    background:linear-gradient(160deg, var(--panel2), var(--panel));
+    border:1px solid var(--line);border-radius:16px;padding:30px;
+  }
+  .chart-card h4{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;margin:0 0 20px;}
+  .chart-wrap{position:relative;height:280px;}
+
   /* ---------- Statement Templates ---------- */
   .subtabs{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap;}
   .subtab{
@@ -362,6 +400,7 @@
     <a href="#news">Market News</a>
     <a href="#projection">Projection Tool</a>
     <a href="#templates">Templates</a>
+    <a href="#ratios">Ratios</a>
     <a href="#resources">Resources</a>
     <a href="#example">Example</a>
     <a href="#faq">FAQ</a>
@@ -620,6 +659,72 @@
   <p class="disclaimer">These figures stay in your browser only — nothing is saved or sent anywhere. For a downloadable version with month-by-month columns and formulas, use the Excel templates available on request.</p>
 </section>
 
+<section class="block" id="ratios">
+  <div class="block-head">
+    <div class="block-label">Live</div>
+    <h2>Financial ratios</h2>
+    <p>Calculated automatically from the numbers in your P&amp;L and Balance Sheet above — edit those figures and these update too.</p>
+  </div>
+
+  <div class="ratio-grid">
+    <div class="ratio-card">
+      <div class="ratio-gauge" id="gauge-current"><span class="ratio-value" id="val-current">0.0x</span></div>
+      <div class="ratio-label">Current Ratio</div>
+      <div class="ratio-sub">Current assets ÷ current liabilities</div>
+      <div class="ratio-status" id="status-current">—</div>
+    </div>
+    <div class="ratio-card">
+      <div class="ratio-gauge" id="gauge-quick"><span class="ratio-value" id="val-quick">0.0x</span></div>
+      <div class="ratio-label">Quick Ratio</div>
+      <div class="ratio-sub">(Current assets − inventory) ÷ current liabilities</div>
+      <div class="ratio-status" id="status-quick">—</div>
+    </div>
+    <div class="ratio-card">
+      <div class="ratio-gauge" id="gauge-de"><span class="ratio-value" id="val-de">0.0x</span></div>
+      <div class="ratio-label">Debt-to-Equity</div>
+      <div class="ratio-sub">Total liabilities ÷ total equity</div>
+      <div class="ratio-status" id="status-de">—</div>
+    </div>
+    <div class="ratio-card">
+      <div class="ratio-gauge" id="gauge-interest"><span class="ratio-value" id="val-interest">0.0x</span></div>
+      <div class="ratio-label">Interest Coverage</div>
+      <div class="ratio-sub">EBITDA ÷ interest expense</div>
+      <div class="ratio-status" id="status-interest">—</div>
+    </div>
+    <div class="ratio-card">
+      <div class="ratio-gauge" id="gauge-grossm"><span class="ratio-value" id="val-grossm">0%</span></div>
+      <div class="ratio-label">Gross Margin</div>
+      <div class="ratio-sub">Gross profit ÷ revenue</div>
+      <div class="ratio-status" id="status-grossm">—</div>
+    </div>
+    <div class="ratio-card">
+      <div class="ratio-gauge" id="gauge-netm"><span class="ratio-value" id="val-netm">0%</span></div>
+      <div class="ratio-label">Net Margin</div>
+      <div class="ratio-sub">Net profit ÷ revenue</div>
+      <div class="ratio-status" id="status-netm">—</div>
+    </div>
+    <div class="ratio-card">
+      <div class="ratio-gauge" id="gauge-roe"><span class="ratio-value" id="val-roe">0%</span></div>
+      <div class="ratio-label">Return on Equity</div>
+      <div class="ratio-sub">Net profit ÷ total equity</div>
+      <div class="ratio-status" id="status-roe">—</div>
+    </div>
+    <div class="ratio-card">
+      <div class="ratio-gauge" id="gauge-roa"><span class="ratio-value" id="val-roa">0%</span></div>
+      <div class="ratio-label">Return on Assets</div>
+      <div class="ratio-sub">Net profit ÷ total assets</div>
+      <div class="ratio-status" id="status-roa">—</div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h4>Margin comparison</h4>
+    <div class="chart-wrap"><canvas id="marginChart"></canvas></div>
+  </div>
+
+  <p class="disclaimer">Healthy ranges shown here are general rules of thumb — they vary meaningfully by industry, business model, and growth stage, so treat them as a starting point for a conversation, not a verdict.</p>
+</section>
+
 <section class="block" id="resources">
   <div class="block-head">
     <div class="block-label">Resources</div>
@@ -766,6 +871,7 @@
   <span>finfutur.com</span>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -862,6 +968,128 @@
   calcPL();
   calcBS();
   calcCF();
+
+  // ---------- Financial Ratios ----------
+  function setGauge(id, pct, colorVar){
+    const g = document.getElementById('gauge-'+id);
+    g.style.setProperty('--pct', Math.max(0, Math.min(100, pct)));
+    g.style.setProperty('--gauge-color', colorVar);
+  }
+  function setStatus(id, level, text){
+    const el = document.getElementById('status-'+id);
+    el.textContent = text;
+    el.className = 'ratio-status ' + level;
+  }
+  const GREEN = '#4FCB9E', AMBER = '#C9A768', RED = '#E08A80';
+
+  let marginChart = null;
+
+  function calcRatios(){
+    // pull from P&L
+    const totalRev = num('pl_sales') + num('pl_otherinc');
+    const totalCogs = num('pl_materials') + num('pl_directlabour');
+    const grossProfit = totalRev - totalCogs;
+    const totalOpex = num('pl_salaries')+num('pl_rent')+num('pl_marketing')+num('pl_admin')+num('pl_prof')+num('pl_otherexp');
+    const ebitda = grossProfit - totalOpex;
+    const pbt = ebitda - num('pl_dep') - num('pl_interest');
+    const netProfit = pbt - num('pl_tax');
+    const interestExp = num('pl_interest');
+
+    // pull from Balance Sheet
+    const totalCA = num('bs_cash')+num('bs_ar')+num('bs_inv')+num('bs_oca');
+    const totalNCA = num('bs_ppe')+num('bs_accdep')+num('bs_onca');
+    const totalAssets = totalCA + totalNCA;
+    const totalCL = num('bs_ap')+num('bs_std')+num('bs_ocl');
+    const totalNCL = num('bs_ltd')+num('bs_oncl');
+    const totalLiab = totalCL + totalNCL;
+    const totalEq = num('bs_share')+num('bs_re');
+    const inventory = num('bs_inv');
+
+    // Current Ratio
+    const currentRatio = totalCL !== 0 ? totalCA/totalCL : 0;
+    document.getElementById('val-current').textContent = currentRatio.toFixed(1)+'x';
+    setGauge('current', (currentRatio/3)*100, currentRatio>=1.5?GREEN:currentRatio>=1?AMBER:RED);
+    setStatus('current', currentRatio>=1.5?'good':currentRatio>=1?'ok':'watch', currentRatio>=1.5?'Healthy':currentRatio>=1?'Watch':'Tight');
+
+    // Quick Ratio
+    const quickRatio = totalCL !== 0 ? (totalCA-inventory)/totalCL : 0;
+    document.getElementById('val-quick').textContent = quickRatio.toFixed(1)+'x';
+    setGauge('quick', (quickRatio/2)*100, quickRatio>=1?GREEN:quickRatio>=0.7?AMBER:RED);
+    setStatus('quick', quickRatio>=1?'good':quickRatio>=0.7?'ok':'watch', quickRatio>=1?'Healthy':quickRatio>=0.7?'Watch':'Tight');
+
+    // Debt-to-Equity (lower is better)
+    const de = totalEq !== 0 ? totalLiab/totalEq : 0;
+    document.getElementById('val-de').textContent = de.toFixed(1)+'x';
+    setGauge('de', (de/3)*100, de<=1?GREEN:de<=2?AMBER:RED);
+    setStatus('de', de<=1?'good':de<=2?'ok':'watch', de<=1?'Conservative':de<=2?'Moderate':'Leveraged');
+
+    // Interest Coverage
+    const intCov = interestExp !== 0 ? ebitda/interestExp : (ebitda>0?99:0);
+    document.getElementById('val-interest').textContent = interestExp!==0 ? intCov.toFixed(1)+'x' : '—';
+    setGauge('interest', (Math.min(intCov,10)/10)*100, intCov>=3?GREEN:intCov>=1.5?AMBER:RED);
+    setStatus('interest', intCov>=3?'good':intCov>=1.5?'ok':'watch', intCov>=3?'Comfortable':intCov>=1.5?'Watch':'Strained');
+
+    // Gross Margin
+    const grossM = totalRev !== 0 ? (grossProfit/totalRev)*100 : 0;
+    document.getElementById('val-grossm').textContent = grossM.toFixed(0)+'%';
+    setGauge('grossm', grossM, grossM>=40?GREEN:grossM>=20?AMBER:RED);
+    setStatus('grossm', grossM>=40?'good':grossM>=20?'ok':'watch', grossM>=40?'Strong':grossM>=20?'Moderate':'Thin');
+
+    // Net Margin
+    const netM = totalRev !== 0 ? (netProfit/totalRev)*100 : 0;
+    document.getElementById('val-netm').textContent = netM.toFixed(0)+'%';
+    setGauge('netm', Math.max(netM,0), netM>=10?GREEN:netM>=3?AMBER:RED);
+    setStatus('netm', netM>=10?'good':netM>=3?'ok':'watch', netM>=10?'Strong':netM>=3?'Moderate':'Thin');
+
+    // ROE
+    const roe = totalEq !== 0 ? (netProfit/totalEq)*100 : 0;
+    document.getElementById('val-roe').textContent = roe.toFixed(0)+'%';
+    setGauge('roe', Math.max(Math.min(roe,30),0)/30*100, roe>=15?GREEN:roe>=5?AMBER:RED);
+    setStatus('roe', roe>=15?'good':roe>=5?'ok':'watch', roe>=15?'Strong':roe>=5?'Moderate':'Low');
+
+    // ROA
+    const roa = totalAssets !== 0 ? (netProfit/totalAssets)*100 : 0;
+    document.getElementById('val-roa').textContent = roa.toFixed(0)+'%';
+    setGauge('roa', Math.max(Math.min(roa,20),0)/20*100, roa>=8?GREEN:roa>=3?AMBER:RED);
+    setStatus('roa', roa>=8?'good':roa>=3?'ok':'watch', roa>=8?'Strong':roa>=3?'Moderate':'Low');
+
+    // Margin comparison chart
+    const ebitdaM = totalRev !== 0 ? (ebitda/totalRev)*100 : 0;
+    const ctx = document.getElementById('marginChart');
+    const chartData = {
+      labels: ['Gross Margin', 'EBITDA Margin', 'Net Margin'],
+      datasets: [{
+        data: [grossM, ebitdaM, netM],
+        backgroundColor: ['#8D9AAE', '#C9A768', '#4FCB9E'],
+        borderRadius: 6,
+        barThickness: 60
+      }]
+    };
+    if(marginChart){
+      marginChart.data = chartData;
+      marginChart.update();
+    } else if(typeof Chart !== 'undefined' && ctx){
+      marginChart = new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, ticks: { color: '#8891A2', callback: v => v+'%' }, grid: { color: 'rgba(232,236,242,0.08)' } },
+            x: { ticks: { color: '#E9EDF3', font: { family: 'Space Grotesk' } }, grid: { display: false } }
+          }
+        }
+      });
+    }
+  }
+
+  ['pl_sales','pl_otherinc','pl_materials','pl_directlabour','pl_salaries','pl_rent','pl_marketing','pl_admin','pl_prof','pl_otherexp','pl_dep','pl_interest','pl_tax',
+   'bs_cash','bs_ar','bs_inv','bs_oca','bs_ppe','bs_accdep','bs_onca','bs_ap','bs_std','bs_ocl','bs_ltd','bs_oncl','bs_share','bs_re']
+    .forEach(id=>document.getElementById(id).addEventListener('input',calcRatios));
+
+  calcRatios();
   document.querySelectorAll('.faq-item').forEach(item=>{
     item.querySelector('.faq-q').addEventListener('click', ()=>{
       const wasOpen = item.classList.contains('open');
